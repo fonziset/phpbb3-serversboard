@@ -39,8 +39,9 @@ class main
 	}
 	public function handle()
 	{
+		global $table_prefix;
 		$this->setBreadcrumbs();
-		$result = $this->db->sql_query("SELECT `server_id`, `server_order`, `server_ip`, `server_status`, `server_hostname`, `server_map`, `server_players` FROM phpbb_serversboard");
+		$result = $this->db->sql_query("SELECT `server_id`, `server_order`, `server_ip`, `server_status`, `server_hostname`, `server_map`, `server_players` FROM {$table_prefix}serversboard");
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$this->setTemplateVars($row);
@@ -50,8 +51,9 @@ class main
 	
 	public function viewDetails($id)
 	{
+		global $table_prefix;
 		$this->setBreadcrumbs();
-		$result = $this->db->sql_query("SELECT * FROM phpbb_serversboard WHERE server_id = $id");
+		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard WHERE server_id = $id");
 		if ($row = $this->db->sql_fetchrow($result))
 		{
 			$playerList = $row['server_playerlist'];
