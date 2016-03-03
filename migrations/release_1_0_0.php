@@ -20,13 +20,13 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				'module.add', array(
 					'acp',
 					'ACP_CAT_DOT_MODS',
-					'Servers Board'
+					'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD'
 				)
 			),
 			array(
 				'module.add', array(
 					'acp',
-					'Servers Board',
+					'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD',
 					array(
 						'module_basename'	=> '\token07\serversboard\acp\serversboard_module'
 					),
