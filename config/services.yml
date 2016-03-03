@@ -1,0 +1,27 @@
+services:
+    token07.serversboard.controller:
+        class: token07\serversboard\controller\main
+        arguments:
+            - '@config'
+            - '@controller.helper'
+            - '@template'
+            - '@user'
+            - '@dbal.conn'
+    token07.serversboard.listener:
+        class: token07\serversboard\event\main_listener
+        arguments:
+            - '@controller.helper'
+            - '@template'
+            - '@config'
+            - '@dbal.conn'
+        tags:
+            - { name: event.listener }
+    token07.serversboard.cron.task.update_serversboard:
+        class: token07\serversboard\cron\task\update_serversboard
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+        calls:
+            - [set_name, [cron.task.update_serversboard]]
+        tags:
+            - { name: cron.task }

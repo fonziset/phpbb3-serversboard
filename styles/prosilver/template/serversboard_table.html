@@ -1,0 +1,28 @@
+<div class="forumbg forumbg-table">
+		<div class="inner">
+			<table class="table1" id="memberlist">
+				<thead>
+					<tr style="text-align: left">
+						<th>{L_TOKEN07_SERVERSBOARD_STATUS}</th>
+						<th>{L_TOKEN07_SERVERSBOARD_NAME}</th>
+						<th>{L_IP}</th>
+						<th>{L_TOKEN07_SERVERSBOARD_PLAYERS}</th>
+						<th>{L_TOKEN07_SERVERSBOARD_MAP}</th>
+						<th>{L_OPTIONS}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- BEGIN serverlist -->
+					<tr class="bg<!-- IF serverlist.S_ROW_COUNT is even -->1<!-- ELSE -->2<!-- ENDIF -->">
+						<td><!-- IF serverlist.STATUS -->{L_ONLINE}<!-- ELSE -->{L_OFFLINE}<!-- ENDIF --></td>
+						<td><a href="{serverlist.LINK}">{serverlist.HOSTNAME}</a></td>
+						<td>{serverlist.IP}</td>
+						<td>{serverlist.PLAYERS}</td>
+						<td>{serverlist.MAP}</td>
+						<td>{serverlist.OPTIONS}<a href="steam://connect/{serverlist.IP}"><img src="/steam_16.png" /></a></td>
+					</tr>
+					<!-- END serverlist -->
+				</tbody>
+			</table>
+		</div>
+</div>

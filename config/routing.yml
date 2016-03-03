@@ -1,0 +1,8 @@
+token07_serversboard_controller:
+    path: /serversboard
+    defaults: { _controller: token07.serversboard.controller:handle }
+token07_serversboard_viewdetails:
+    path: /serversboard/view/{id}
+    defaults: { _controller: token07.serversboard.controller:viewDetails }
+    requirements:
+        id: \d+
