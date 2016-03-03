@@ -42,7 +42,7 @@ class main_listener implements EventSubscriberInterface
 		if ($this->config['serversboard_enable'])
 		{
 			$this->template->assign_var('TOKEN07_SERVERSBOARD_ENABLE', true);
-			$result = $this->db->sql_query("SELECT * FROM phpbb_serversboard");
+			$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard");
 			while ($row = $this->db->sql_fetchrow($result))
 			{
 				$tmp = array('STATUS' => $row['server_status'], 'HOSTNAME' => $row['server_hostname'], 'IP' => $row['server_ip'], 'PLAYERS' => $row['server_players'], 'MAP' => $row['server_map'], 'OPTIONS' => '');
