@@ -11,19 +11,19 @@ class serversboard_info
 			'title'		=> 'Servers',
 			'modes'		=> array(
 				'servers'	=> array(
-					'title' => 'Servers',
+					'title' => 'TOKEN07_SERVERSBOARD_ACP_MANAGE',
 					'auth'	=> 'acl_a_',
-					'cat'	=> 'Servers Board',
+					'cat'	=> 'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD',
 				),
 				'settings'	=> array(
-					'title' => 'Settings',
+					'title' => 'GENERAL_SETTINGS',
 					'auth'	=> 'acl_a_',
-					'cat'	=> 'Servers Board',
+					'cat'	=> 'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD',
 				),
 				'add'	=> array(
-					'title' => 'Add',
+					'title' => 'TOKEN07_SERVERSBOARD_ACP_ADD',
 					'auth'	=> 'acl_a_',
-					'cat'	=> 'Servers Board',
+					'cat'	=> 'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD',
 				),
 			),
 		);

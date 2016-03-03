@@ -9,7 +9,7 @@ class serversboard_module
 	function main($id, $mode)
 	{
 		global $config, $request, $template, $user;
-		$user->add_lang('acp/common');
+		//$user->add_lang('acp/common');
 		$user->add_lang_ext('token07/serversboard', 'acp/serversboard_acp');
 		add_form_key('token07/serversboard');
 		switch ($mode)
