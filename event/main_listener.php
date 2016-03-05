@@ -47,6 +47,7 @@ class main_listener implements EventSubscriberInterface
 	
 	public function load_serversboard($page_title)
 	{
+		global $table_prefix;
 		if ($this->config['serversboard_enable'])
 		{
 			$this->template->assign_var('TOKEN07_SERVERSBOARD_ENABLE', true);

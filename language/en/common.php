@@ -28,4 +28,5 @@ $lang = array_merge($lang, array(
 	
 	'TOKEN07_SERVERSBOARD_VIEWDETAILS'	=> 'View Server Details',
 	'TOKEN07_SERVERSBOARD_TIMELONLINE'	=> 'Time Online',
+	'TOKEN07_SERVERSBOARD_LASTUPDATED'	=> 'Last updated: %s',
 ));

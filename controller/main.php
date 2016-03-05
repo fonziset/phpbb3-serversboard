@@ -54,6 +54,7 @@ class main
 		{
 			$this->setTemplateVars($row);
 		}
+		$this->template->assign_var('SERVERSBOARD_LAST_UPDATE', sprintf($this->user->lang('TOKEN07_SERVERSBOARD_LASTUPDATED'), $this->user->format_date($this->config['serversboard_update_last_run'])));
 		return $this->helper->render('serversboard_body.html', 'Servers Board');
 	}
 	
