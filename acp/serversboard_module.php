@@ -42,7 +42,6 @@ class serversboard_module
 						case 'move_up':
 						case 'move_down':
 							$this->move(request_var('server_id', 0), $action == "move_up" ? 1 : -1);
-							print($action == "move_up" ? 1 : -1);
 						default:
 						break;
 					}
