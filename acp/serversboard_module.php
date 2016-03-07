@@ -15,17 +15,15 @@ class serversboard_module
 	var $u_action;
 	function main($id, $mode)
 	{
-		global $config, $request, $template, $user, $db, $table_prefix;
+		global $config, $request, $template, $user, $db, $table_prefix, $request;
 		//$user->add_lang('acp/common');
 		$user->add_lang_ext('token07/serversboard', 'acp/serversboard_acp');
-		add_form_key('token07/serversboard');
 		switch ($mode)
 		{
 			case 'servers':
 				if (isset($_GET['action']))
 				{
 					$action = request_var('action', '');
-					print($action);
 					switch ($action)
 					{
 						case 'delete':
@@ -42,10 +40,17 @@ class serversboard_module
 						case 'move_up':
 						case 'move_down':
 							$this->move(request_var('server_id', 0), $action == "move_up" ? 1 : -1);
+							if ($request->is_ajax())
+							{
+								$json_response = new \phpbb\json_response;
+								$json_response->send(array('success' => true));
+								return;
+							}
 						default:
 						break;
 					}
 				}
+				add_form_key('token07/serversboard');
 				$this->tpl_name = 'serversboard_manage';
 				$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
 				$result = $db->sql_query("SELECT server_id, server_order, server_ip, server_hostname FROM {$table_prefix}serversboard ORDER BY server_order ASC");
@@ -97,6 +102,7 @@ class serversboard_module
 	function move($id, $delta)
 	{
 		global $db;
+		
 		$delta = (int) $delta;
 		if (!$delta)
 		{
