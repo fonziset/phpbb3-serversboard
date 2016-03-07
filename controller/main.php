@@ -49,7 +49,7 @@ class main
 	{
 		global $table_prefix;
 		$this->setBreadcrumbs();
-		$result = $this->db->sql_query("SELECT `server_id`, `server_order`, `server_ip`, `server_status`, `server_hostname`, `server_map`, `server_players` FROM {$table_prefix}serversboard");
+		$result = $this->db->sql_query("SELECT `server_id`, `server_order`, `server_ip`, `server_status`, `server_hostname`, `server_map`, `server_players` FROM {$table_prefix}serversboard ORDER BY server_order");
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$this->setTemplateVars($row);
@@ -62,7 +62,7 @@ class main
 	{
 		global $table_prefix;
 		$this->setBreadcrumbs();
-		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard WHERE server_id = $id");
+		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard WHERE server_id = $id ORDER BY server_order`");
 		if ($row = $this->db->sql_fetchrow($result))
 		{
 			$playerList = $row['server_playerlist'];
