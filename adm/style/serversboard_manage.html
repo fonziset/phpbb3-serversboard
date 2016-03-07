@@ -1,0 +1,31 @@
+<!-- INCLUDE overall_header.html -->
+
+<a id="maincontent"></a>
+	<h1>{L_TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD}</h1>
+	<p></p>
+	<table>
+		<thead>
+			<tr>
+				<th>Hostname</th>
+				<th>Server IP</th>
+				<th>{L_ACTION}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- BEGIN serverlist -->
+			<tr>
+				<td>{serverlist.NAME}</td>
+				<td>{serverlist.IP}</td>
+				<td class="actions">
+					<span class="up-disabled" style="display: none;">{ICON_MOVE_UP_DISABLED}</span>
+					<span class="up"><a href="{serverlist.U_MOVE_UP}" data-ajax="row_up">{ICON_MOVE_UP}</a></span>
+					<span class="down-disabled" style="display:none;">{ICON_MOVE_DOWN_DISABLED}</span>
+					<span class="down"><a href="{serverlist.U_MOVE_DOWN}" data-ajax="row_down">{ICON_MOVE_DOWN}</a></span>
+					<a href="{serverlist.U_DELETE}">{ICON_DELETE}</a>
+				</td>
+			</tr>
+			<!-- END serverlist -->
+		</tbody>
+	</table>
+	
+<!-- INCLUDE overall_footer.html -->
