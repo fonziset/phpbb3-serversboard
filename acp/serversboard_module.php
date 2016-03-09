@@ -57,7 +57,6 @@ class serversboard_module
 				while ($row = $db->sql_fetchrow($result))
 				{
 					$tmp = array('NAME' => $row['server_hostname'], 'IP' => $row['server_ip']);
-					print($row['server_lastupdate']);
 					$tmp['LASTUPDATE'] = $user->format_date($row['server_lastupdate']);
 					// Links
 					$tmp['U_DELETE'] = "{$this->u_action}&amp;action=delete&amp;server_id={$row['server_id']}";
