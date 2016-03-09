@@ -23,7 +23,8 @@ $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_ACP_ADD'			=> 'Add Servers',
 	'TOKEN07_SERVERSBOARD_ACP_DISPINDEX'	=> 'Display servers board on index',
 	'TOKEN07_SERVERSBOARD_ACP_UPDATEFREQ'	=> 'Server data update frequency (seconds)',
-	'TOKEN07_SERVERSBOARD_ACP_SERVERIP'		=> 'Server IP (in IP:Port format)',
+	'TOKEN07_SERVERSBOARD_ACP_SERVERIP'		=> 'Server IP',
+	'TOKEN07_SERVERSBOARD_ACP_SERVERPORT'	=> 'Server Port',
 	'TOKEN07_SERVERSBOARD_ACP_HOSTNAME'		=> 'Hostname (updated on data refresh)',
 	'TOKEN07_SERVERSBOARD_ACP_SERVERTYPE'	=> 'Server Type',
 	)
