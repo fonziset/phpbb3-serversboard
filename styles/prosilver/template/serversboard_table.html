@@ -19,7 +19,11 @@
 						<td>{serverlist.IP}</td>
 						<td>{serverlist.PLAYERS}</td>
 						<td>{serverlist.MAP}</td>
-						<td>{serverlist.OPTIONS}<a href="steam://connect/{serverlist.IP}"><img src="/steam_16.png" /></a></td>
+						<td>
+							{serverlist.OPTIONS}
+							<a href="steam://connect/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/steam_16.png" /></a>
+							<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" /></a>
+						</td>
 					</tr>
 					<!-- END serverlist -->
 				</tbody>
