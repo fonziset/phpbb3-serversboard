@@ -65,7 +65,24 @@ class update_serversboard extends \phpbb\cron\task\base
 			{
 				$stmt = "UPDATE {$table_prefix}serversboard SET server_status = 0 WHERE server_id = %d";
 				$this->db->sql_query(sprintf($stmt,$row['server_id']));
-				return false;
+			}
+			catch (InvalidPacketException $e)
+			{
+				// Try it one more time
+				try
+				{
+					$players = $serverInfo->GetPlayers();
+					if (is_array($players))
+					{
+						$players = $this->db->sql_escape(json_encode($players));
+						$this->db->sql_query("UPDATE {$table_prefix}serversboard SET server_playerlist = '$players' WHERE server_id = {$row['server_id']}");
+					}
+				}
+				catch (Exception $e)
+				{
+					// Clear the player list since it couldn't be updated.
+					$this->db->sql_query("UPDATE {$table_prefix}serversboard SET server_playerlist = '[]' WHERE server_id = {$row['server_id']}");
+				}
 			}
 		}
 		$this->config->set('serversboard_update_last_run', time());
