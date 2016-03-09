@@ -50,7 +50,6 @@ class serversboard_module
 						break;
 					}
 				}
-				add_form_key('token07/serversboard');
 				$this->tpl_name = 'serversboard_manage';
 				$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
 				$result = $db->sql_query("SELECT server_id, server_order, server_ip, server_hostname, server_lastupdate FROM {$table_prefix}serversboard ORDER BY server_order ASC");
@@ -67,11 +66,12 @@ class serversboard_module
 				//trigger_error("Not done yet" . adm_back_link($this->u_action), E_USER_WARNING);
 			break;
 			case 'settings':
+				add_form_key('token07/serversboard');
 				if ($request->is_set_post('submit'))
 				{
 					if (!check_form_key('token07/serversboard'))
 					{
-						trigger_error('FORM_INVALID');
+						trigger_error('FORM_INVALID', E_USER_WARNING);
 					}
 					$config->set('serversboard_enable', $request->variable('token07_serversboard_enable', 1));
 					$config->set('serversboard_update_time', $request->variable('token07_serversboard_interval', 1));
@@ -86,13 +86,14 @@ class serversboard_module
 				));
 			break;
 			case 'add':
+				add_form_key('token07/serversboard');
 				$this->tpl_name = 'serversboard_add';
 				$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_EDIT');
 				if ($request->is_set_post('submit'))
 				{
 					if (!check_form_key('token07/serversboard'))
 					{
-						trigger_error('FORM_INVALID');
+						trigger_error('FORM_INVALID', E_USER_WARNING);
 					}
 					trigger_error("Not done yet" . adm_back_link($this->u_action), E_USER_WARNING);
 				}
