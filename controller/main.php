@@ -62,7 +62,7 @@ class main
 	{
 		global $table_prefix;
 		$this->setBreadcrumbs();
-		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard WHERE server_id = $id ORDER BY server_order`");
+		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard WHERE server_id = $id ORDER BY server_order");
 		if ($row = $this->db->sql_fetchrow($result))
 		{
 			$playerList = $row['server_playerlist'];
