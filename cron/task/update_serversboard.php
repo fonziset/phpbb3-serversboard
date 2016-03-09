@@ -52,8 +52,8 @@ class update_serversboard extends \phpbb\cron\task\base
 			{
 				$serverInfo->Connect( $sData[0], $sData[1], 1, SourceQuery::SOURCE );
 				$info = $serverInfo->GetInfo();
-				$stmt = "UPDATE {$table_prefix}serversboard SET server_status = 1, server_hostname = '%s', server_map = '%s', server_players = '%d / %d' WHERE server_id = %d";
-				$this->db->sql_query(sprintf($stmt,$this->db->sql_escape($info['HostName']), $this->db->sql_escape($info['Map']), $info['Players'], $info['MaxPlayers'], $row['server_id']));
+				$stmt = "UPDATE {$table_prefix}serversboard SET server_status = 1, server_hostname = '%s', server_map = '%s', server_players = '%d / %d', server_lastupdate = %d WHERE server_id = %d";
+				$this->db->sql_query(sprintf($stmt,$this->db->sql_escape($info['HostName']), $this->db->sql_escape($info['Map']), $info['Players'], $info['MaxPlayers'], time(), $row['server_id']));
 				$players = $serverInfo->GetPlayers();
 				if (is_array($players))
 				{

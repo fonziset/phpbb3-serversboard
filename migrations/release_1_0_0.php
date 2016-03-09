@@ -56,6 +56,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 						'server_map'		=> array('VCHAR:32', NULL),
 						'server_players'	=> array('TEXT', '0 / 0'),
 						'server_playerlist'	=> array('TEXT', '[]'),
+						'server_lastupdate'	=> array('UINT', 0),
 					),
 					'PRIMARY_KEY'	=> 'server_id',
 				)

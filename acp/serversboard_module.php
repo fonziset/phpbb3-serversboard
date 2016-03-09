@@ -53,10 +53,12 @@ class serversboard_module
 				add_form_key('token07/serversboard');
 				$this->tpl_name = 'serversboard_manage';
 				$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
-				$result = $db->sql_query("SELECT server_id, server_order, server_ip, server_hostname FROM {$table_prefix}serversboard ORDER BY server_order ASC");
+				$result = $db->sql_query("SELECT server_id, server_order, server_ip, server_hostname, server_lastupdate FROM {$table_prefix}serversboard ORDER BY server_order ASC");
 				while ($row = $db->sql_fetchrow($result))
 				{
 					$tmp = array('NAME' => $row['server_hostname'], 'IP' => $row['server_ip']);
+					print($row['server_lastupdate']);
+					$tmp['LASTUPDATE'] = $user->format_date($row['server_lastupdate']);
 					// Links
 					$tmp['U_DELETE'] = "{$this->u_action}&amp;action=delete&amp;server_id={$row['server_id']}";
 					$tmp['U_MOVE_UP'] = "{$this->u_action}&amp;action=move_up&amp;server_id={$row['server_id']}";
