@@ -29,7 +29,9 @@ class serversboard_module
 						case 'delete':
 							if (confirm_box(true))
 							{
-								trigger_error("It wasn't actually deleted (yet)" . adm_back_link($this->u_action));
+								$server_id = request_var('server_id', 0);
+								$db->sql_query("DELETE FROM phpbb_serversboard WHERE server_id = $server_id");
+								trigger_error("Server deleted." . adm_back_link($this->u_action));
 							}
 							$fields = build_hidden_fields(array(
 								'action' => 'delete',
@@ -95,7 +97,39 @@ class serversboard_module
 					{
 						trigger_error('FORM_INVALID', E_USER_WARNING);
 					}
-					trigger_error("Not done yet" . adm_back_link($this->u_action), E_USER_WARNING);
+					$server_ip = request_var('token07_serversboard_ip', '');
+					$server_port = request_var('token07_serversboard_port', 0);
+					$server_name = request_var('token07_serversboard_hostname', '');
+					
+					// Validate IP and port
+					if (!filter_var($server_ip, FILTER_VALIDATE_IP))
+					{
+						trigger_error("The IP address entered is invalid" . adm_back_link($this->u_action . "&amp;server_ip=$server_ip&amp;server_port=$server_port"));
+					}
+					if ($server_port <= 0 || $server_port >= 65535)
+					{
+						trigger_error("");
+					}
+					
+					// Find the highest id number 
+					$result = $db->sql_query("SELECT MAX(server_order) AS max FROM phpbb_serversboard");
+					if (!$row = $db->sql_fetchrow($result))
+					{
+						$max = 1;
+					}
+					else
+					{
+						$max = $row['max']+1;
+					}
+					$db->sql_freeresult($result);
+					
+					// Sanitize for SQL
+					$server_ip = $db->sql_escape($server_ip . ':' . $server_port);
+					$server_name = $db->sql_escape($server_name);
+					$db->sql_query("INSERT INTO phpbb_serversboard (server_ip, server_order, server_hostname, server_players, server_playerlist, server_lastupdate) VALUES ('$server_ip', $max , '$server_name', '-', '[]', 0)");
+					$task = new \token07\serversboard\cron\task\update_serversboard($config, $db);
+					$task->run();
+					trigger_error('Server Added'. adm_back_link($this->u_action));
 				}
 			break;
 		}
