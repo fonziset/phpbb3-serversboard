@@ -30,7 +30,7 @@ class serversboard_module
 							if (confirm_box(true))
 							{
 								$server_id = request_var('server_id', 0);
-								$db->sql_query("DELETE FROM phpbb_serversboard WHERE server_id = $server_id");
+								$db->sql_query("DELETE FROM {$table_prefix}serversboard WHERE server_id = $server_id");
 								trigger_error("Server deleted." . adm_back_link($this->u_action));
 							}
 							$fields = build_hidden_fields(array(
@@ -112,7 +112,7 @@ class serversboard_module
 					}
 					
 					// Find the highest id number 
-					$result = $db->sql_query("SELECT MAX(server_order) AS max FROM phpbb_serversboard");
+					$result = $db->sql_query("SELECT MAX(server_order) AS max FROM {$table_prefix}serversboard");
 					if (!$row = $db->sql_fetchrow($result))
 					{
 						$max = 1;
@@ -126,7 +126,7 @@ class serversboard_module
 					// Sanitize for SQL
 					$server_ip = $db->sql_escape($server_ip . ':' . $server_port);
 					$server_name = $db->sql_escape($server_name);
-					$db->sql_query("INSERT INTO phpbb_serversboard (server_ip, server_order, server_hostname, server_players, server_playerlist, server_lastupdate) VALUES ('$server_ip', $max , '$server_name', '-', '[]', 0)");
+					$db->sql_query("INSERT INTO {$table_prefix}serversboard (server_ip, server_order, server_hostname, server_players, server_playerlist, server_lastupdate) VALUES ('$server_ip', $max , '$server_name', '-', '[]', 0)");
 					$task = new \token07\serversboard\cron\task\update_serversboard($config, $db);
 					$task->run();
 					trigger_error('Server Added'. adm_back_link($this->u_action));
@@ -147,7 +147,7 @@ class serversboard_module
 
 		$move_up = ($delta > 0) ? true : false;
 		// Get the current position.
-		$sql = "SELECT server_order FROM phpbb_serversboard WHERE server_id = $id";
+		$sql = "SELECT server_order FROM {$table_prefix}serversboard WHERE server_id = $id";
 		$result = $db->sql_query($sql);
 		if (!$data = $db->sql_fetchrow($result))
 		{
@@ -160,7 +160,7 @@ class serversboard_module
 			$delta = abs($delta) + 1;
 		}
 		$sql = 'SELECT server_order
-			FROM ' . "phpbb_serversboard" . '
+			FROM ' . "{$table_prefix}serversboard" . '
 			WHERE server_order' . (($move_up) ? ' < ' : ' > ') . $current_value . '
 			ORDER BY server_order' . (($move_up) ? ' DESC' : ' ASC');
 			$result = $db->sql_query_limit($sql, $delta);
@@ -187,7 +187,7 @@ class serversboard_module
 		{
 			// First we move all items between our current value and the target value up/down 1,
 			// so we have a gap for our item to move.
-			$sql = 'UPDATE ' . 'phpbb_serversboard' . '
+			$sql = 'UPDATE ' . "{$table_prefix}serversboard" . '
 				SET server_order = server_order' . (($move_up) ? ' + 1' : ' - 1') . '
 				WHERE server_order' . (($move_up) ? ' >= ' : ' <= ') . ($current_value - $delta) . '
 					AND server_order' . (($move_up) ? ' < ' : ' > ') . $current_value;
@@ -196,7 +196,7 @@ class serversboard_module
 
 			// And now finally, when we moved some other items and built a gap,
 			// we can move the desired item to it.
-			$sql = 'UPDATE ' . 'phpbb_serversboard' . '
+			$sql = 'UPDATE ' . "{$table_prefix}serversboard" . '
 				SET server_order = server_order ' . (($move_up) ? ' - ' : ' + ') . abs($delta) . '
 				WHERE server_id = ' . (int) $id;
 			$db->sql_query($sql);
