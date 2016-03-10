@@ -1,32 +1,43 @@
-<div class="forumbg forumbg-table">
-		<div class="inner">
-			<table class="table1" id="memberlist">
-				<thead>
-					<tr style="text-align: left">
-						<th>{L_TOKEN07_SERVERSBOARD_STATUS}</th>
-						<th>{L_TOKEN07_SERVERSBOARD_NAME}</th>
-						<th>{L_IP}</th>
-						<th>{L_TOKEN07_SERVERSBOARD_PLAYERS}</th>
-						<th>{L_TOKEN07_SERVERSBOARD_MAP}</th>
-						<th>{L_OPTIONS}</th>
-					</tr>
-				</thead>
-				<tbody>
-					<!-- BEGIN serverlist -->
-					<tr class="bg<!-- IF serverlist.S_ROW_COUNT is even -->1<!-- ELSE -->2<!-- ENDIF -->">
-						<td><!-- IF serverlist.STATUS -->{L_ONLINE}<!-- ELSE -->{L_OFFLINE}<!-- ENDIF --></td>
-						<td><a href="{serverlist.LINK}">{serverlist.HOSTNAME}</a></td>
-						<td>{serverlist.IP}</td>
-						<td>{serverlist.PLAYERS}</td>
-						<td>{serverlist.MAP}</td>
-						<td>
-							{serverlist.OPTIONS}
-							<a href="steam://connect/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/steam_16.png" /></a>
+<div class="forabg">
+	<div class="inner">
+		<ul class="topiclist">
+			<li class="header">
+				<dl class="icon">
+					<dt class="serverstatus">{L_TOKEN07_SERVERSBOARD_STATUS}</dt>
+					<dd class="servername">{L_TOKEN07_SERVERSBOARD_NAME}</dd>
+					<dd class="serverip">{L_IP}</dd>
+					<dd class="playercount">{L_TOKEN07_SERVERSBOARD_PLAYERS}</dd>
+					<dd class="mapname">{L_TOKEN07_SERVERSBOARD_MAP}</dd>
+					<dd class="serveroptions">{L_OPTIONS}</dd>
+				</dl>
+			</li>
+		</ul>
+		<ul class="topiclist forums">
+			<!-- BEGIN serverlist -->
+			<li class="row">
+				<dl class="icon">
+					<dt class="serverstatus">
+						<span style="padding-left: 15px"><!-- IF serverlist.STATUS -->{L_ONLINE}<!-- ELSE -->{L_OFFLINE}<!-- ENDIF --></span>
+						<div class="responsive-show" style="display: none;">
+							{serverlist.HOSTNAME}
+							<br /> {serverlist.PLAYERS}
+							<br /> {serverlist.MAP}
+							<br /> <a href="steam://connect/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/steam_16.png" /></a>
 							<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" /></a>
-						</td>
-					</tr>
-					<!-- END serverlist -->
-				</tbody>
-			</table>
-		</div>
+						</div>
+					</dt>
+					<dd class="servername"><a href="{serverlist.LINK}" class="forumtitle">{serverlist.HOSTNAME}</a></dd>
+					<dd class="serverip">{serverlist.IP}</dd>
+					<dd class="playercount">{serverlist.PLAYERS}</dd>
+					<dd class="mapname">{serverlist.MAP}</dd>
+					<dd class="serveroptions">
+						{serverlist.OPTIONS}
+						<a href="steam://connect/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/steam_16.png" /></a>
+						<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" /></a>
+					</dd>
+				</dl>
+			</li>
+			<!-- END serverlist -->
+		</ul>
+	</div>
 </div>
