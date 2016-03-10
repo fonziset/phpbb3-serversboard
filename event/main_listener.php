@@ -55,7 +55,7 @@ class main_listener implements EventSubscriberInterface
 			while ($row = $this->db->sql_fetchrow($result))
 			{
 				$tmp = array('STATUS' => $row['server_status'], 'HOSTNAME' => $row['server_hostname'], 'IP' => $row['server_ip'], 'PLAYERS' => $row['server_players'], 'MAP' => $row['server_map'], 'OPTIONS' => '');
-				$tmp['LINK'] = append_sid($this->helper->route("token07_serversboard_viewdetails", array('id' => $row['server_id'])));
+				$tmp['LINK'] = $this->helper->route("token07_serversboard_viewdetails", array('id' => $row['server_id']));
 				$this->template->assign_block_vars('serverlist', $tmp);
 			}
 		}
