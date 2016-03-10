@@ -15,7 +15,7 @@ class serversboard_info
 	{
 		return array(
 			'filename'	=> '\token07\serversboard\acp\serversboard_module',
-			'title'		=> 'Servers',
+			'title'		=> 'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD',
 			'modes'		=> array(
 				'servers'	=> array(
 					'title' => 'TOKEN07_SERVERSBOARD_ACP_MANAGE',
