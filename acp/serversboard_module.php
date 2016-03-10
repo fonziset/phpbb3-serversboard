@@ -57,12 +57,14 @@ class serversboard_module
 				$result = $db->sql_query("SELECT server_id, server_order, server_ip, server_hostname, server_lastupdate FROM {$table_prefix}serversboard ORDER BY server_order ASC");
 				while ($row = $db->sql_fetchrow($result))
 				{
-					$tmp = array('NAME' => $row['server_hostname'], 'IP' => $row['server_ip']);
-					$tmp['LASTUPDATE'] = $user->format_date($row['server_lastupdate']);
-					// Links
-					$tmp['U_DELETE'] = "{$this->u_action}&amp;action=delete&amp;server_id={$row['server_id']}";
-					$tmp['U_MOVE_UP'] = "{$this->u_action}&amp;action=move_up&amp;server_id={$row['server_id']}";
-					$tmp['U_MOVE_DOWN'] = "{$this->u_action}&amp;action=move_down&amp;server_id={$row['server_id']}";
+					$tmp = array(
+						'NAME'			=> htmlentities($row['server_hostname']), 
+						'IP'			=> $row['server_ip'],
+						'LASTUPDATE'	=> $user->format_date($row['server_lastupdate']),
+						'U_DELETE'		=> "{$this->u_action}&amp;action=delete&amp;server_id={$row['server_id']}",
+						'U_MOVE_UP'		=> "{$this->u_action}&amp;action=move_up&amp;server_id={$row['server_id']}",
+						'U_MOVE_DOWN'	=> "{$this->u_action}&amp;action=move_down&amp;server_id={$row['server_id']}",
+					);
 					$template->assign_block_vars('serverlist', $tmp);
 				}
 				//trigger_error("Not done yet" . adm_back_link($this->u_action), E_USER_WARNING);
