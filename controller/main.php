@@ -29,7 +29,7 @@ class main
 	private function setBreadcrumbs()
 	{
 		$this->template->assign_block_vars('navlinks', array(
-			'FORUM_NAME'	=> "Servers Board",
+			'FORUM_NAME'	=> $this->user->lang('TOKEN07_SERVERSBOARD_SERVERSBOARD'),
 			'U_VIEW_FORUM'	=> $this->helper->route('token07_serversboard_controller'),
 		));
 	}
@@ -54,6 +54,7 @@ class main
 		{
 			$this->setTemplateVars($row);
 		}
+		$this->template->assign_var('TOKEN07_SERVERSBOARD_ENABLE', true);
 		$this->template->assign_var('SERVERSBOARD_LAST_UPDATE', sprintf($this->user->lang('TOKEN07_SERVERSBOARD_LASTUPDATED'), $this->user->format_date($this->config['serversboard_update_last_run'])));
 		return $this->helper->render('serversboard_body.html', $this->user->lang('TOKEN07_SERVERSBOARD_SERVERSBOARD'));
 	}
@@ -62,6 +63,7 @@ class main
 	{
 		global $table_prefix;
 		$this->setBreadcrumbs();
+		$this->template->assign_var('TOKEN07_SERVERSBOARD_ENABLE', true);
 		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard WHERE server_id = $id ORDER BY server_order");
 		if ($row = $this->db->sql_fetchrow($result))
 		{
