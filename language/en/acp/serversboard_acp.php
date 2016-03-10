@@ -28,7 +28,10 @@ $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_ACP_HOSTNAME'		=> 'Hostname (updated on data refresh)',
 	'TOKEN07_SERVERSBOARD_ACP_HOSTNAME2'	=> 'Host Name',
 	'TOKEN07_SERVERSBOARD_ACP_SERVERTYPE'	=> 'Server Type',
-	'TOKEN07_SERVERSBOARD_ACP_INVALIDIP'	=> 'Ther IP address entered was invalid.',
-	'TOKEN07_SERVERSBOARD_ACP_INVALIDPORT'	=> 'Ther port number entered was invalid.',
+	'TOKEN07_SERVERSBOARD_ACP_INVALIDIP'	=> 'The IP address entered was invalid.',
+	'TOKEN07_SERVERSBOARD_ACP_INVALIDPORT'	=> 'The port number entered was invalid.',
+	'TOKEN07_SERVERSBOARD_ACP_CONFIRMDEL'	=> 'Are you sure you want to delete this server?',
+	'TOKEN07_SERVERSBOARD_ACP_DELETED'		=> 'Server deleted.',
+	'TOKEN07_SERVERSBOARD_ACP_ADDED'		=> 'Server Added.',
 	)
 );

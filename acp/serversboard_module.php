@@ -31,13 +31,13 @@ class serversboard_module
 							{
 								$server_id = request_var('server_id', 0);
 								$db->sql_query("DELETE FROM {$table_prefix}serversboard WHERE server_id = $server_id");
-								trigger_error("Server deleted." . adm_back_link($this->u_action));
+								trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_DELETED') . adm_back_link($this->u_action));
 							}
 							$fields = build_hidden_fields(array(
 								'action' => 'delete',
 								'server_id'	=> request_var('server_id', 0),
 							));
-							confirm_box(false, "Are you sure you want to delete this server?", $fields);
+							confirm_box(false, $user->lang('TOKEN07_SERVERSBOARD_ACP_CONFIRMDEL'), $fields);
 						break;
 						case 'move_up':
 						case 'move_down':
@@ -131,7 +131,7 @@ class serversboard_module
 					$db->sql_query("INSERT INTO {$table_prefix}serversboard (server_ip, server_order, server_hostname, server_players, server_playerlist, server_lastupdate) VALUES ('$server_ip', $max , '$server_name', '-', '[]', 0)");
 					$task = new \token07\serversboard\cron\task\update_serversboard($config, $db);
 					$task->run();
-					trigger_error('Server Added'. adm_back_link($this->u_action));
+					trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_ADDED'). adm_back_link($this->u_action));
 				}
 			break;
 		}

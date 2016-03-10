@@ -74,7 +74,7 @@ class main
 				$pData = array_map('htmlentities', array('NAME' => $player->Name, 'TIME' => $player->TimeF));
 				$this->template->assign_block_vars('players', $pData);
 			}
-			return $this->helper->render('serversboard_viewserver.html', 'Servers Board');
+			return $this->helper->render('serversboard_viewserver.html', $this->user->lang('TOKEN07_SERVERSBOARD_SERVERSBOARD'));
 		}
 	}
 }
