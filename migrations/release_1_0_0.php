@@ -49,6 +49,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				$this->table_prefix . 'serversboard' => array(
 					'COLUMNS'	=> array(
 						'server_id'			=> array('UINT', NULL, 'auto_increment'),
+						'server_type'		=> array('UINT', 1),
 						'server_order'		=> array('UINT', 1),
 						'server_ip'			=> array('VCHAR:60', NULL),
 						'server_status'		=> array('UINT', NULL),
@@ -56,7 +57,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 						'server_map'		=> array('VCHAR:32', NULL),
 						'server_players'	=> array('TEXT', '0 / 0'),
 						'server_playerlist'	=> array('TEXT', '[]'),
-						'server_lastupdate'	=> array('UINT', 0),
+						'server_lastupdate'	=> array('TIMESTAMP', 0),
 					),
 					'PRIMARY_KEY'	=> 'server_id',
 				)
