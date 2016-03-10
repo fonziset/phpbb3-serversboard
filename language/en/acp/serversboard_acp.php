@@ -27,5 +27,7 @@ $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_ACP_SERVERPORT'	=> 'Server Port',
 	'TOKEN07_SERVERSBOARD_ACP_HOSTNAME'		=> 'Hostname (updated on data refresh)',
 	'TOKEN07_SERVERSBOARD_ACP_SERVERTYPE'	=> 'Server Type',
+	'TOKEN07_SERVERSBOARD_ACP_INVALIDIP'	=> 'Ther IP address entered was invalid.',
+	'TOKEN07_SERVERSBOARD_ACP_INVALIDPORT'	=> 'Ther port number entered was invalid.',
 	)
 );
