@@ -17,7 +17,7 @@
 			<li class="row">
 				<dl class="icon">
 					<dt class="serverstatus">
-						<span style="padding-left: 15px"><!-- IF serverlist.STATUS -->{L_ONLINE}<!-- ELSE -->{L_OFFLINE}<!-- ENDIF --></span>
+						<div style="margin-top: 10px; padding-left: 10px"><!-- IF serverlist.STATUS -->{L_ONLINE}<!-- ELSE -->{L_OFFLINE}<!-- ENDIF --></div>
 						<div class="responsive-show" style="display: none;">
 							{serverlist.HOSTNAME}
 							<br /> {serverlist.PLAYERS}
@@ -26,14 +26,16 @@
 							<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" /></a>
 						</div>
 					</dt>
-					<dd class="servername"><a href="{serverlist.LINK}" class="forumtitle">{serverlist.HOSTNAME}</a></dd>
-					<dd class="serverip">{serverlist.IP}</dd>
-					<dd class="playercount">{serverlist.PLAYERS}</dd>
-					<dd class="mapname">{serverlist.MAP}</dd>
+					<dd class="servername"><div class="serverdata"><a href="{serverlist.LINK}" class="forumtitle">{serverlist.HOSTNAME}</a></div></dd>
+					<dd class="serverip"><div class="serverdata">{serverlist.IP}</div></dd>
+					<dd class="playercount"><div class="serverdata">{serverlist.PLAYERS}</div></dd>
+					<dd class="mapname"><div class="serverdata">{serverlist.MAP}</div></dd>
 					<dd class="serveroptions">
-						{serverlist.OPTIONS}
-						<a href="steam://connect/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/steam_16.png" /></a>
-						<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" /></a>
+						<div class="serverdata">
+							{serverlist.OPTIONS}
+							<a href="steam://connect/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/steam_16.png" /></a>
+							<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" /></a>
+						</div>
 					</dd>
 				</dl>
 			</li>

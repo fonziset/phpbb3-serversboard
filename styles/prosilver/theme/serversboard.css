@@ -1,3 +1,8 @@
+div.serverdata
+{
+	display: inline-block;
+	margin-top: 5px;
+}
 dt.serverstatus {
 	font-weight: normal !important;
 	margin-right: -1080px !important;
@@ -5,22 +10,26 @@ dt.serverstatus {
 }
 dd.servername {
 	text-align: center;
-	width: 550px;
+	width: 500px;
 }
 dd.serverip {
 	text-align: center;
 	width: 150px;
+	font-size: 1.2em;
 }
 dd.playercount {
 	text-align: center;
 	width: 85px;
+	font-size: 1.2em;
 }
 dd.mapname {
 	text-align: center;
-	width: 150px;
+	width: 200px;
+		font-size: 1.2em;
 }
 dd.serveroptions
 {
 	text-align: center;
 	width: 140px;
+	font-size: 1.2em;
 }
