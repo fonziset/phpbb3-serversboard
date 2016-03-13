@@ -66,7 +66,7 @@ class main
 		if ($request->is_ajax())
 		{
 			$json_response = new \phpbb\json_response;
-			$result = $this->db->sql_query("SELECT server_hostname, server_playerlist FROM {$table_prefix}serversboard WHERE server_id = $id ORDER BY server_order");
+			$result = $this->db->sql_query("SELECT server_hostname, server_playerlist FROM {$table_prefix}serversboard WHERE server_id = $id");
 			if ($row = $this->db->sql_fetchrow($result))
 			{
 				$playerList = $row['server_playerlist'];
@@ -82,7 +82,7 @@ class main
 		}
 		$this->setBreadcrumbs();
 		$this->template->assign_var('TOKEN07_SERVERSBOARD_ENABLE', true);
-		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard WHERE server_id = $id ORDER BY server_order");
+		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard WHERE server_id = $id");
 		if ($row = $this->db->sql_fetchrow($result))
 		{
 			$playerList = $row['server_playerlist'];
