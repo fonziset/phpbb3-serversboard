@@ -1,11 +1,17 @@
-div.serverdata
-{
+dl.serversboard {
+	min-height: 15px;
+}
+dl.serversboarddata dd {
+	margin-top: -3px;
+}
+div.serverdata {
 	display: inline-block;
-	margin-top: 5px;
+	margin-top: -10px;
+	font-size: 1.1em;
 }
 dt.serverstatus {
 	font-weight: normal !important;
-	margin-right: -1080px !important;
+	margin-right: -1075px !important;
 	display: inline;
 }
 dd.servername {
@@ -14,7 +20,7 @@ dd.servername {
 }
 dd.serverip {
 	text-align: center;
-	width: 150px;
+	width: 190px;
 	font-size: 1.2em;
 }
 dd.playercount {
@@ -25,11 +31,14 @@ dd.playercount {
 dd.mapname {
 	text-align: center;
 	width: 200px;
-		font-size: 1.2em;
-}
-dd.serveroptions
-{
-	text-align: center;
-	width: 140px;
 	font-size: 1.2em;
+}
+dd.serveroptions {
+	text-align: center;
+	width: 100px;
+	font-size: 1.2em;
+}
+
+div.serverdata img {
+	margin-top: 8px !important;
 }

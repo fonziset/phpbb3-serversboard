@@ -2,7 +2,7 @@
 	<div class="inner">
 		<ul class="topiclist">
 			<li class="header">
-				<dl class="icon">
+				<dl class="serversboard">
 					<dt class="serverstatus">{L_TOKEN07_SERVERSBOARD_STATUS}</dt>
 					<dd class="servername">{L_TOKEN07_SERVERSBOARD_NAME}</dd>
 					<dd class="serverip">{L_IP}</dd>
@@ -15,9 +15,9 @@
 		<ul class="topiclist forums">
 			<!-- BEGIN serverlist -->
 			<li class="row">
-				<dl class="icon">
+				<dl class="serversboard serversboarddata">
 					<dt class="serverstatus">
-						<div style="margin-top: 10px; padding-left: 10px"><!-- IF serverlist.STATUS -->{L_ONLINE}<!-- ELSE -->{L_OFFLINE}<!-- ENDIF --></div>
+						<div style="padding-left: 10px"><!-- IF serverlist.STATUS -->{L_ONLINE}<!-- ELSE -->{L_OFFLINE}<!-- ENDIF --></div>
 						<div class="responsive-show" style="display: none;">
 							{serverlist.HOSTNAME}
 							<br /> {serverlist.PLAYERS}
@@ -26,15 +26,15 @@
 							<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" /></a>
 						</div>
 					</dt>
-					<dd class="servername"><div class="serverdata"><a href="{serverlist.LINK}" class="forumtitle">{serverlist.HOSTNAME}</a></div></dd>
-					<dd class="serverip"><div class="serverdata">{serverlist.IP}</div></dd>
-					<dd class="playercount"><div class="serverdata">{serverlist.PLAYERS}</div></dd>
-					<dd class="mapname"><div class="serverdata">{serverlist.MAP}</div></dd>
+					<dd class="servername"><a href="{serverlist.LINK}" class="forumtitle">{serverlist.HOSTNAME}</a></dd>
+					<dd class="serverip">{serverlist.IP}</dd>
+					<dd class="playercount"><a href="{serverlist.LINK}" data-ajax="true">{serverlist.PLAYERS}</a></dd>
+					<dd class="mapname">{serverlist.MAP}</dd>
 					<dd class="serveroptions">
 						<div class="serverdata">
 							{serverlist.OPTIONS}
-							<a href="steam://connect/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/steam_16.png" /></a>
-							<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" /></a>
+							<a href="steam://connect/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/steam_16.png" class="serveropt"/></a>
+							<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" class="serveropt" /></a>
 						</div>
 					</dd>
 				</dl>
