@@ -24,6 +24,7 @@ $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_NAME'			=> 'Server Name',
 	'TOKEN07_SERVERSBOARD_SERVER'		=> 'Servers',
 	'TOKEN07_SERVERSBOARD_PLAYERS'		=> 'Players',
+	'TOKEN07_SERVERSBOARD_PLAYERLIST'	=> 'Player list for %s:',
 	'TOKEN07_SERVERSBOARD_MAP'			=> 'Map',
 	
 	'TOKEN07_SERVERSBOARD_VIEWDETAILS'	=> 'View Server Details',

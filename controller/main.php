@@ -61,7 +61,25 @@ class main
 	
 	public function viewDetails($id)
 	{
-		global $table_prefix;
+		global $request, $table_prefix;
+		
+		if ($request->is_ajax())
+		{
+			$json_response = new \phpbb\json_response;
+			$result = $this->db->sql_query("SELECT server_hostname, server_playerlist FROM {$table_prefix}serversboard WHERE server_id = $id ORDER BY server_order");
+			if ($row = $this->db->sql_fetchrow($result))
+			{
+				$playerList = $row['server_playerlist'];
+				$html = "<ul style=\"list-style: none;\">";
+				foreach (json_decode($playerList) AS $player)
+				{
+					$html .= "<li>" . htmlentities($player->Name) . "</li>";
+				}
+				$html .= "</ul>";
+			}
+			$json_response->send(array('MESSAGE_TITLE' => sprintf($this->user->lang('TOKEN07_SERVERSBOARD_PLAYERLIST', htmlentities($row['server_hostname']))), 'MESSAGE_TEXT' => $html));
+			return;
+		}
 		$this->setBreadcrumbs();
 		$this->template->assign_var('TOKEN07_SERVERSBOARD_ENABLE', true);
 		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard WHERE server_id = $id ORDER BY server_order");
