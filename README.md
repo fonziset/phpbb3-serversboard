@@ -4,6 +4,7 @@ An extension for phpBB that allows you to display information about game servers
 #Screenshots
 ![Imgur](https://i.imgur.com/GdqOLZB.png)
 ![Imgur](http://i.imgur.com/8PnqG3F.png)
+![Imgur](http://i.imgur.com/HKQlTpV.png)
 
 #Installation
 * Run `composer install` in directory
