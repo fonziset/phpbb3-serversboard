@@ -139,7 +139,7 @@ class serversboard_module
 	// Some logic from includes/acp/acp_groups
 	function move($id, $delta)
 	{
-		global $db;
+		global $db, $table_prefix;
 		
 		$delta = (int) $delta;
 		if (!$delta)
