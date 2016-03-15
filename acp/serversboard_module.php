@@ -23,25 +23,25 @@ class serversboard_module
 			case 'servers':
 				if (isset($_GET['action']))
 				{
-					$action = request_var('action', '');
+					$action = $request->variable('action', '');
 					switch ($action)
 					{
 						case 'delete':
 							if (confirm_box(true))
 							{
-								$server_id = request_var('server_id', 0);
+								$server_id = $request->variable('server_id', 0);
 								$db->sql_query("DELETE FROM {$table_prefix}serversboard WHERE server_id = $server_id");
 								trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_DELETED') . adm_back_link($this->u_action));
 							}
 							$fields = build_hidden_fields(array(
 								'action' => 'delete',
-								'server_id'	=> request_var('server_id', 0),
+								'server_id'	=> $request->variable('server_id', 0),
 							));
 							confirm_box(false, $user->lang('TOKEN07_SERVERSBOARD_ACP_CONFIRMDEL'), $fields);
 						break;
 						case 'move_up':
 						case 'move_down':
-							$this->move(request_var('server_id', 0), $action == "move_up" ? 1 : -1);
+							$this->move($request->variable('server_id', 0), $action == "move_up" ? 1 : -1);
 							if ($request->is_ajax())
 							{
 								$json_response = new \phpbb\json_response;
@@ -99,9 +99,9 @@ class serversboard_module
 					{
 						trigger_error('FORM_INVALID', E_USER_WARNING);
 					}
-					$server_ip = request_var('token07_serversboard_ip', '');
-					$server_port = request_var('token07_serversboard_port', 0);
-					$server_name = request_var('token07_serversboard_hostname', '');
+					$server_ip = $request->variable('token07_serversboard_ip', '');
+					$server_port = $request->variable('token07_serversboard_port', 0);
+					$server_name = $request->variable('token07_serversboard_hostname', '');
 					
 					// Validate IP and port
 					if (!filter_var($server_ip, FILTER_VALIDATE_IP))
