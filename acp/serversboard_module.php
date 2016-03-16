@@ -78,6 +78,7 @@ class serversboard_module
 						trigger_error('FORM_INVALID', E_USER_WARNING);
 					}
 					$config->set('serversboard_enable', $request->variable('token07_serversboard_enable', 1));
+					$config->set('serversboard_navbar_link_enable', $request->variable('token07_serversboard_navbar_link_enable', 0));
 					$config->set('serversboard_update_time', $request->variable('token07_serversboard_interval', 1));
 					
 					trigger_error($user->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
@@ -85,8 +86,9 @@ class serversboard_module
 				$this->tpl_name = 'serversboard_settings';
 				$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
 				$template->assign_vars(array(
-					'TOKEN07_SERVERSBOARD_ENABLE'	=> $config['serversboard_enable'],
-					'TOKEN07_SERVERSBOARD_INTERVAL'	=> $config['serversboard_update_time'],
+					'TOKEN07_SERVERSBOARD_ENABLE'				=> $config['serversboard_enable'],
+					'TOKEN07_SERVERSBOARD_INTERVAL'				=> $config['serversboard_update_time'],
+					'TOKEN07_SERVERSBOARD_NAVBAR_LINK_ENABLE'	=> $config['serversboard_navbar_link_enable'],
 				));
 			break;
 			case 'add':

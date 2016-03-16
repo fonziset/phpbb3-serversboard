@@ -25,6 +25,9 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				'config.add', array('serversboard_update_last_run', 0)
 			),
 			array(
+				'config.add', array('serversboard_navbar_link_enable', 1)
+			),
+			array(
 				'module.add', array(
 					'acp',
 					'ACP_CAT_DOT_MODS',

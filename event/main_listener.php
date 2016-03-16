@@ -43,6 +43,8 @@ class main_listener implements EventSubscriberInterface
 			'lang_set' => 'common',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
+		$this->template->assign_var('TOKEN07_SERVERSBOARD_NAVBAR_LINK_ENABLE', $this->config['serversboard_navbar_link_enable']);
+		$this->template->assign_var('TOKEN07_SERVERSBOARD_URL', $this->helper->route("token07_serversboard_controller"));
 	}
 	
 	public function load_serversboard($page_title)
