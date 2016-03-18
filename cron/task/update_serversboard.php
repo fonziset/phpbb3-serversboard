@@ -93,7 +93,6 @@ class update_serversboard extends \phpbb\cron\task\base
 				global $user;
 				// Just report it in the error log for now.
 				$message = sprintf($user->lang['TRACKED_PHP_ERROR'], $e->getMessage() . $e->getTraceAsString());
-				print($message);
 				$phpbb_log->add('critical', 0, '', 'LOG_GENERAL_ERROR', false, array($message));
 			}
 		}
