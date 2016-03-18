@@ -49,7 +49,7 @@ class update_serversboard extends \phpbb\cron\task\base
 			
 			try
 			{
-				$serverInfo->Connect($sData[0], $sData[1]+1, 1, SourceQuery::SOURCE);
+				$serverInfo->Connect($sData[0], $sData[1], 1, SourceQuery::SOURCE);
 				$info = $serverInfo->GetInfo();
 				if ($info === false)
 				{
