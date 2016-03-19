@@ -34,5 +34,6 @@ $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_ACP_DELETED'		=> 'Server deleted.',
 	'TOKEN07_SERVERSBOARD_ACP_ADDED'		=> 'Server Added.',
 	'TOKEN07_SERVERSBOARD_ACP_NAVBAR_LINK'	=> 'Add link to servers board in navigation bar',
+	'TOKEN07_SERVERSBOARD_ACP_NO_SERVER'	=> 'The specified server does not exist.',
 	)
 );

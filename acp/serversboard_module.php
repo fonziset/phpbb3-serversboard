@@ -15,7 +15,7 @@ class serversboard_module
 	var $u_action;
 	function main($id, $mode)
 	{
-		global $config, $request, $template, $user, $db, $table_prefix, $request;
+		global $config, $request, $template, $user, $db, $table_prefix, $request, $phpbb_log;
 		//$user->add_lang('acp/common');
 		$user->add_lang_ext('token07/serversboard', 'acp/serversboard_acp');
 		switch ($mode)
@@ -30,8 +30,15 @@ class serversboard_module
 							if (confirm_box(true))
 							{
 								$server_id = $request->variable('server_id', 0);
-								$db->sql_query("DELETE FROM {$table_prefix}serversboard WHERE server_id = $server_id");
-								trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_DELETED') . adm_back_link($this->u_action));
+								$result = $db->sql_query("SELECT server_ip FROM {$table_prefix}serversboard WHERE server_id = $server_id");
+								if ($row = $db->sql_fetchrow($result))
+								{
+									$db->sql_query("DELETE FROM {$table_prefix}serversboard WHERE server_id = $server_id");
+									$phpbb_log->add('admin', $user->data['user_id'], $user->data['session_ip'], 'TOKEN07_SERVERSBOARD_ACP_LOG_DELETE', time(), array($row['server_ip']));
+									
+									trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_DELETED') . adm_back_link($this->u_action));
+								}
+								trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_NO_SERVER') . adm_back_link($this->u_action), E_USER_WARNING);
 							}
 							$fields = build_hidden_fields(array(
 								'action' => 'delete',
@@ -81,6 +88,7 @@ class serversboard_module
 					$config->set('serversboard_navbar_link_enable', $request->variable('token07_serversboard_navbar_link_enable', 0));
 					$config->set('serversboard_update_time', $request->variable('token07_serversboard_interval', 1));
 					
+					$phpbb_log->add('admin', $user->data['user_id'], $user->data['session_ip'], 'TOKEN07_SERVERSBOARD_ACP_LOG_UPDATE', time());
 					trigger_error($user->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
 				}
 				$this->tpl_name = 'serversboard_settings';
@@ -131,8 +139,11 @@ class serversboard_module
 					$server_ip = $db->sql_escape($server_ip . ':' . $server_port);
 					$server_name = $db->sql_escape($server_name);
 					$db->sql_query("INSERT INTO {$table_prefix}serversboard (server_ip, server_order, server_hostname, server_players, server_playerlist, server_lastupdate) VALUES ('$server_ip', $max , '$server_name', '-', '[]', 0)");
+					
 					$task = new \token07\serversboard\cron\task\update_serversboard($config, $db);
 					$task->run();
+					
+					$phpbb_log->add('admin', $user->data['user_id'], $user->data['session_ip'], 'TOKEN07_SERVERSBOARD_ACP_LOG_ADDED', time(), array($server_ip));
 					trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_ADDED'). adm_back_link($this->u_action));
 				}
 			break;
