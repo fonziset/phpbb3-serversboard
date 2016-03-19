@@ -108,11 +108,11 @@ class serversboard_module
 					// Validate IP and port
 					if (!filter_var($server_ip, FILTER_VALIDATE_IP))
 					{
-						trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_INVALIDIP') . adm_back_link($this->u_action . "&amp;server_ip=$server_ip&amp;server_port=$server_port"));
+						trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_INVALIDIP') . adm_back_link($this->u_action . "&amp;server_ip=$server_ip&amp;server_port=$server_port"), E_USER_WARNING);
 					}
 					if ($server_port <= 0 || $server_port >= 65535)
 					{
-						trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_INVALIDPORT') . adm_back_link($this->u_action . "&amp;server_ip=$server_ip&amp;server_port=$server_port"));
+						trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_INVALIDPORT') . adm_back_link($this->u_action . "&amp;server_ip=$server_ip&amp;server_port=$server_port"), E_USER_WARNING);
 					}
 					
 					// Find the highest id number 
