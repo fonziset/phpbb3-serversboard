@@ -25,9 +25,25 @@
 		<dl>
 			<dt><label for="token07_serversboard_servertype">{L_TOKEN07_SERVERSBOARD_ACP_SERVERTYPE}</label></dt>
 			<dd>
-				<select name="token07_serversboard_servertype">
-					<option value="srcds">SRCDS</option>
+				 <select name="token07_serversboard_servertype">
+					<!-- BEGIN serversboard_base_protocols -->
+					<optgroup label="{serversboard_base_protocols.CATEGORY}">
+						<!-- BEGIN serversboard_base_protocols.protocols -->
+						<option value="{serversboard_base_protocols.protocols.VALUE}">{serversboard_base_protocols.protocols.NAME}</option>
+						<!-- END serversboard_base_protocols.protocols -->
+					</optgroup>
+					<!-- END serversboard_base_protocols -->
 				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt>
+				<label for="token07_serversboard_hostname">{L_TOKEN07_SERVERSBOARD_ACP_QUERY_PORT}</label>
+				<br />
+				<span>{L_TOKEN07_SERVERSBOARD_ACP_QUERY_PORT_EXPLAIN}</span>
+			</dt>
+			<dd>
+				<input type="number" name="token07_serversboard_queryport" />
 			</dd>
 		</dl>
 		<p class="submit-buttons">

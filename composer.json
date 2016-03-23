@@ -2,7 +2,7 @@
 	"name": "token07/serversboard",
 	"type": "phpbb-extension",
 	"description": "Lists status of Source servers",
-	"version": "1.0.0",
+	"version": "1.0.0-beta4",
 	"license": "GPL-2.0",
 	"authors": [
 		{
@@ -13,7 +13,7 @@
 	],
 	"require": {
 		"php": ">=5.3.3",
-		"xpaw/php-source-query-class": "^1.0"
+		"austinb/gameq": "^3.0"
 	},
 	"extra": {
 		"display-name": "Servers Board",

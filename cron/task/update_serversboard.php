@@ -12,8 +12,6 @@ namespace token07\serversboard\cron\task;
 
 require(dirname(__FILE__) . "/../../vendor/autoload.php");
 
-use \xPaw\SourceQuery\SourceQuery;
-
 class update_serversboard extends \phpbb\cron\task\base
 {
 	protected $config;
@@ -40,12 +38,24 @@ class update_serversboard extends \phpbb\cron\task\base
 	{
 		global $phpbb_log, $table_prefix, $phpbb_log;
 
+		$GameQ = new \GameQ\GameQ();
+		$servers = array();
 		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard");
 		
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$sData = explode(":", $row['server_ip']);
-			$serverInfo = new SourceQuery();
+			$server = array(
+				'type'	=> $row['server_type'],
+				'host'	=> $row['server_ip'],
+				'id'	=> $row['server_id'],
+			);
+			if ($row['server_query_port'] != NULL)
+			{
+				$server['options'] = array('query_port' => $row['server_query_port']);
+			}
+			$servers[] = $server;
+			/*$serverInfo = new SourceQuery();
 			
 			try
 			{
@@ -94,7 +104,39 @@ class update_serversboard extends \phpbb\cron\task\base
 				// Just report it in the error log for now.
 				$message = sprintf($user->lang['TRACKED_PHP_ERROR'], $e->getMessage() . $e->getTraceAsString());
 				$phpbb_log->add('critical', 0, '', 'LOG_GENERAL_ERROR', false, array($message));
+			} */
+		}
+		$GameQ->addServers($servers);
+		$GameQ->setOption('timeout', 5);
+		$results = $GameQ->process();
+		//print_r($results);
+		foreach ($results as $server => $result)
+		{
+			$offline = (!empty($result['gq_online'])) ? $result['gq_online'] : 0;
+			$newDetails = array(
+				'server_status'		=> $offline,
+				'server_players'	=> sprintf('%d / %d', $result['gq_numplayers'], $result['gq_maxplayers']),
+				'server_map'		=> $this->db->sql_escape($result['gq_map']),
+				'server_lastupdate'	=> time(),
+			);
+			if (!$offline || !empty($result['gq_hostname']))
+			{
+				$newDetails['server_hostname'] = $this->db->sql_escape($result['gq_hostname']);
 			}
+			$players = array();
+			foreach ($result['players'] AS $player)
+			{
+				$players[] = array(
+					'Name'	=> $this->db->sql_escape(utf8_encode($player['name'])),
+					'TimeF'	=> gmdate(($player['time'] > 3600 ? "H:i:s" : "i:s" ), $player['time']),
+				);
+			}
+			$newDetails['server_playerlist'] = json_encode($players);
+			
+			$sql = 'UPDATE ' . $table_prefix . 'serversboard' . ' SET ' . $this->db->sql_build_array("UPDATE", $newDetails) . '
+				WHERE server_id = ' . (int) $server;
+			$this->db->sql_query($sql);
+			var_dump($result);
 		}
 		$this->config->set('serversboard_update_last_run', time());
 	}
