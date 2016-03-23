@@ -2,7 +2,7 @@
 	"name": "token07/serversboard",
 	"type": "phpbb-extension",
 	"description": "Lists status of Source servers",
-	"version": "1.0.0-beta5",
+	"version": "1.0.0-beta4",
 	"license": "GPL-2.0",
 	"authors": [
 		{
