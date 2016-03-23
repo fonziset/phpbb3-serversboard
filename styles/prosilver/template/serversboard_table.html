@@ -29,12 +29,19 @@
 					<dd class="servername"><a href="{serverlist.LINK}" class="forumtitle">{serverlist.HOSTNAME}</a></dd>
 					<dd class="serverip">{serverlist.IP}</dd>
 					<dd class="playercount"><a href="{serverlist.LINK}" data-ajax="true">{serverlist.PLAYERS}</a></dd>
+					<!-- IF serverlist.MAP -->
 					<dd class="mapname">{serverlist.MAP}</dd>
+					<!-- ELSE -->
+					<dd class="mapname">&nbsp;</dd>
+					<!-- ENDIF -->
 					<dd class="serveroptions">
 						<div class="serverdata">
-							{serverlist.OPTIONS}
-							<a href="steam://connect/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/steam_16.png" class="serveropt"/></a>
+							<!-- IF serverlist.ICON -->
+							<a href="{serverlist.JOINLINK}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/{serverlist.ICON}_16.png" class="serveropt"/> </a>
+							<!-- ENDIF -->
+							<!-- IF serverlist.GAMETRACKER -->
 							<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" class="serveropt" /></a>
+							<!-- ENDIF -->
 						</div>
 					</dd>
 				</dl>

@@ -10,18 +10,20 @@
 
 namespace token07\serversboard\migrations;
 
-class server_type_column_fix extends \phpbb\db\migration\migration
+// The order of the array was ignored (column dropped and not readded)
+//  in my test so migration was split.
+class add_join_link_column extends \phpbb\db\migration\migration
 {
 	static public function depends_on()
     {
-        return array('\token07\serversboard\migrations\add_query_port_column');
+        return array('\token07\serversboard\migrations\server_type_column_fix_pt2');
 	}
 	public function update_schema()
 	{
 		return array(
-			'drop_columns'	=> array(
+			'add_columns'	=> array(
 				$this->table_prefix . 'serversboard'	=> array(
-					'server_type',
+					'server_join_link'	=> array('VCHAR:255', NULL),
 				),
 			),
 		);
@@ -29,9 +31,9 @@ class server_type_column_fix extends \phpbb\db\migration\migration
 	public function revert_schema()
 	{
 		return array(
-			'add_columns'	=> array(
+			'drop_columns'	=> array(
 				$this->table_prefix . 'serversboard'	=> array(
-					'server_type'	=> array('UINT', 1),
+					'server_join_link',
 				),
 			),
 		);

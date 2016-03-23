@@ -56,10 +56,47 @@ class main_listener implements EventSubscriberInterface
 			$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard ORDER BY server_order");
 			while ($row = $this->db->sql_fetchrow($result))
 			{
+				/*
 				$tmp = array('STATUS' => $row['server_status'], 'HOSTNAME' => $row['server_hostname'], 'IP' => $row['server_ip'], 'PLAYERS' => $row['server_players'], 'MAP' => $row['server_map'], 'OPTIONS' => '');
 				$tmp['LINK'] = $this->helper->route("token07_serversboard_viewdetails", array('id' => $row['server_id']));
-				$this->template->assign_block_vars('serverlist', $tmp);
+				$this->template->assign_block_vars('serverlist', $tmp);*/
+				$this->setTemplateVars($row);
 			}
 		}
+	}
+	private function setTemplateVars($row)
+	{
+		$tmp = array(
+			'STATUS'	=> $row['server_status'],
+			'HOSTNAME'	=> $row['server_hostname'],
+			'IP'		=> $row['server_ip'],
+			'PLAYERS'	=> $row['server_players'],
+			'MAP'		=> $row['server_map'],
+			'JOINLINK'	=> $row['server_join_link'],
+		);
+		$proto = substr($row['server_join_link'], 0, strpos($row['server_join_link'], ':'));
+		switch ($proto)
+		{
+			case 'steam':
+				$tmp['ICON'] = 'steam';
+				$tmp['GAMETRACKER'] = true;
+			break;
+			case 'teamspeak':
+			case 'ts3server':
+				$tmp['ICON'] = 'teamspeak';
+			break;
+			case 'minecraft':
+				$tmp['ICON'] = 'minecraft';
+				$tmp['GAMETRACKER'] = true;
+			break;
+		}
+		if (!$row['server_status'])
+		{
+			$row['server_players'] = '0 / 0';
+			$row['server_playerlist'] = '[]';
+		}
+		$this->template->assign_var('SERVERSBOARD_SERVER_STATUS', $row['server_status']);
+		$tmp['LINK'] = $this->helper->route("token07_serversboard_viewdetails", array('id' => $row['server_id']));
+		$this->template->assign_block_vars('serverlist', $tmp);
 	}
 }

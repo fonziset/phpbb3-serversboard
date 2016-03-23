@@ -35,7 +35,30 @@ class main
 	}
 	private function setTemplateVars($row)
 	{
-		$tmp = array('STATUS' => $row['server_status'], 'HOSTNAME' => $row['server_hostname'], 'IP' => $row['server_ip'], 'PLAYERS' => $row['server_players'], 'MAP' => $row['server_map'], 'OPTIONS' => '');
+		$tmp = array(
+			'STATUS'	=> $row['server_status'],
+			'HOSTNAME'	=> $row['server_hostname'],
+			'IP'		=> $row['server_ip'],
+			'PLAYERS'	=> $row['server_players'],
+			'MAP'		=> $row['server_map'],
+			'JOINLINK'	=> $row['server_join_link'],
+		);
+		$proto = substr($row['server_join_link'], 0, strpos($row['server_join_link'], ':'));
+		switch ($proto)
+		{
+			case 'steam':
+				$tmp['ICON'] = 'steam';
+				$tmp['GAMETRACKER'] = true;
+			break;
+			case 'teamspeak':
+			case 'ts3server':
+				$tmp['ICON'] = 'teamspeak';
+			break;
+			case 'minecraft':
+				$tmp['ICON'] = 'minecraft';
+				$tmp['GAMETRACKER'] = true;
+			break;
+		}
 		if (!$row['server_status'])
 		{
 			$row['server_players'] = '0 / 0';
@@ -49,7 +72,7 @@ class main
 	{
 		global $table_prefix;
 		$this->setBreadcrumbs();
-		$result = $this->db->sql_query("SELECT `server_id`, `server_order`, `server_ip`, `server_status`, `server_hostname`, `server_map`, `server_players` FROM {$table_prefix}serversboard ORDER BY server_order");
+		$result = $this->db->sql_query("SELECT server_id, server_order, server_ip, server_status, server_hostname, server_map, server_players, server_join_link FROM {$table_prefix}serversboard ORDER BY server_order");
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$this->setTemplateVars($row);
