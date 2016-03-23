@@ -114,7 +114,7 @@ class serversboard_module
 					$server_ip = $request->variable('token07_serversboard_ip', '');
 					$server_port = $request->variable('token07_serversboard_port', 0);
 					$server_name = $request->variable('token07_serversboard_hostname', '');
-					$server_protocol = $request->variable('token07_serversboard_protocol', '');
+					$server_protocol = $request->variable('token07_serversboard_servertype', '');
 					$server_queryport = $request->variable('token07_serversboard_queryport', '');
 					
 					// Validate IP and port
@@ -151,6 +151,7 @@ class serversboard_module
 						'server_lastupdate'	=> 0,
 						'server_query_port'	=> (empty($server_queryport)) ? NULL : $server_queryport,
 						'server_type'		=> $db->sql_escape($server_protocol),
+						'server_type'		=> $server_protocol,
 					);
 					$sql = 'INSERT INTO ' . $table_prefix . 'serversboard' . ' ' . $db->sql_build_array('INSERT', $columns);
 					$db->sql_query($sql);
