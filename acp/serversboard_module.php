@@ -150,11 +150,8 @@ class serversboard_module
 						'server_playerlist'	=> '[]',
 						'server_lastupdate'	=> 0,
 						'server_query_port'	=> (empty($server_queryport)) ? NULL : $server_queryport,
+						'server_type'		=> $db->sql_escape($server_protocol),
 					);
-					if ($server_queryport != '')
-					{
-						$columns['server_queryport'] = $server_queryport;
-					}
 					$sql = 'INSERT INTO ' . $table_prefix . 'serversboard' . ' ' . $db->sql_build_array('INSERT', $columns);
 					$db->sql_query($sql);
 					//$db->sql_query("INSERT INTO {$table_prefix}serversboard (server_ip, server_order, server_hostname, server_players, server_playerlist, server_lastupdate) VALUES ('$server_ip', $max , '$server_name', '-', '[]', 0)");

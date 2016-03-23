@@ -137,7 +137,7 @@ class update_serversboard extends \phpbb\cron\task\base
 			$sql = 'UPDATE ' . $table_prefix . 'serversboard' . ' SET ' . $this->db->sql_build_array("UPDATE", $newDetails) . '
 				WHERE server_id = ' . (int) $server;
 			$this->db->sql_query($sql);
-			var_dump($result);
+			//var_dump($result);
 		}
 		$this->config->set('serversboard_update_last_run', time());
 	}

@@ -16,7 +16,7 @@ class add_join_link_column extends \phpbb\db\migration\migration
 {
 	static public function depends_on()
     {
-        return array('\token07\serversboard\migrations\server_type_column_fix_pt2');
+        return array('\token07\serversboard\migrations\add_query_port_column');
 	}
 	public function update_schema()
 	{

@@ -14,7 +14,7 @@ class server_type_column_fix extends \phpbb\db\migration\migration
 {
 	static public function depends_on()
     {
-        return array('\token07\serversboard\migrations\add_query_port_column');
+        return array('\token07\serversboard\migrations\release_1_0_0');
 	}
 	public function update_schema()
 	{
