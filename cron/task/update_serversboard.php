@@ -50,6 +50,14 @@ class update_serversboard extends \phpbb\cron\task\base
 				'host'	=> $row['server_ip'],
 				'id'	=> $row['server_id'],
 			);
+			if ($server['type'] == 'teamspeak3' && empty($row['server_query_port']))
+			{
+				$row['server_query_port'] = 10011;
+			}
+			elseif ($server['type'] == 'teamspeak2' && empty($row['server_query_port']))
+			{
+				$row['server_query_port'] = 51234;
+			}
 			if ($row['server_query_port'] != NULL)
 			{
 				$server['options'] = array('query_port' => $row['server_query_port']);
@@ -127,6 +135,10 @@ class update_serversboard extends \phpbb\cron\task\base
 			$players = array();
 			foreach ($result['players'] AS $player)
 			{
+				if (empty($player['time']))
+				{
+					$player['time'] = 0;
+				}
 				$players[] = array(
 					'Name'	=> $this->db->sql_escape(utf8_encode($player['gq_name'])),
 					'TimeF'	=> gmdate(($player['time'] > 3600 ? "H:i:s" : "i:s" ), $player['time']),
