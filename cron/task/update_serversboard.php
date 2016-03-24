@@ -63,56 +63,6 @@ class update_serversboard extends \phpbb\cron\task\base
 				$server['options'] = array('query_port' => $row['server_query_port']);
 			}
 			$servers[] = $server;
-			/*$serverInfo = new SourceQuery();
-			
-			try
-			{
-				$serverInfo->Connect($sData[0], $sData[1], 1, SourceQuery::SOURCE);
-				$info = $serverInfo->GetInfo();
-				if ($info === false)
-				{
-					// More than likely it's down. Throw a SocketException so it's marked as offline
-					throw new \xPaw\SourceQuery\Exception\SocketException("Could not fetch server data");
-				}
-				$stmt = "UPDATE {$table_prefix}serversboard SET server_status = 1, server_hostname = '%s', server_map = '%s', server_players = '%d / %d', server_lastupdate = %d WHERE server_id = %d";
-				$this->db->sql_query(sprintf($stmt,$this->db->sql_escape($info['HostName']), $this->db->sql_escape($info['Map']), $info['Players'], $info['MaxPlayers'], time(), $row['server_id']));
-				$players = $serverInfo->GetPlayers();
-				if (is_array($players))
-				{
-					$players = $this->db->sql_escape(json_encode($players));
-					$this->db->sql_query("UPDATE {$table_prefix}serversboard SET server_playerlist = '$players' WHERE server_id = {$row['server_id']}");
-				}
-			}
-			catch (\xPaw\SourceQuery\Exception\SocketException $e)
-			{
-				$stmt = "UPDATE {$table_prefix}serversboard SET server_status = 0 WHERE server_id = %d";
-				$this->db->sql_query(sprintf($stmt,$row['server_id']));
-			}
-			catch (\xPaw\SourceQuery\Exception\InvalidPacketException $e)
-			{
-				// Try it one more time
-				try
-				{
-					$players = $serverInfo->GetPlayers();
-					if (is_array($players))
-					{
-						$players = $this->db->sql_escape(json_encode($players));
-						$this->db->sql_query("UPDATE {$table_prefix}serversboard SET server_playerlist = '$players' WHERE server_id = {$row['server_id']}");
-					}
-				}
-				catch (\Exception $e)
-				{
-					// Clear the player list since it couldn't be updated.
-					$this->db->sql_query("UPDATE {$table_prefix}serversboard SET server_playerlist = '[]' WHERE server_id = {$row['server_id']}");
-				}
-			}
-			catch (\Exception $e)
-			{
-				global $user;
-				// Just report it in the error log for now.
-				$message = sprintf($user->lang['TRACKED_PHP_ERROR'], $e->getMessage() . $e->getTraceAsString());
-				$phpbb_log->add('critical', 0, '', 'LOG_GENERAL_ERROR', false, array($message));
-			} */
 		}
 		$GameQ->addServers($servers);
 		$GameQ->setOption('timeout', 5);
@@ -124,7 +74,7 @@ class update_serversboard extends \phpbb\cron\task\base
 			$newDetails = array(
 				'server_status'		=> $offline,
 				'server_players'	=> sprintf('%d / %d', $result['gq_numplayers'], $result['gq_maxplayers']),
-				'server_map'		=> $this->db->sql_escape($result['map']),
+				'server_map'		=> $this->db->sql_escape($result['gq_map']),
 				'server_lastupdate'	=> time(),
 				'server_join_link'	=> $this->db->sql_escape($result['gq_joinlink']),
 			);
