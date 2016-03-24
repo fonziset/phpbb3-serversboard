@@ -21,14 +21,14 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_SERVERSBOARD'	=> 'Servers Board',
 	'TOKEN07_SERVERSBOARD_STATUS'		=> 'Status',
-	'TOKEN07_SERVERSBOARD_NAME'			=> 'Server Name',
+	'TOKEN07_SERVERSBOARD_NAME'			=> 'Server name',
 	'TOKEN07_SERVERSBOARD_SERVER'		=> 'Servers',
 	'TOKEN07_SERVERSBOARD_PLAYERS'		=> 'Players',
 	'TOKEN07_SERVERSBOARD_PLAYERLIST'	=> 'Player list for %s:',
 	'TOKEN07_SERVERSBOARD_MAP'			=> 'Map',
 	
-	'TOKEN07_SERVERSBOARD_VIEWDETAILS'	=> 'View Server Details',
-	'TOKEN07_SERVERSBOARD_TIMELONLINE'	=> 'Time Online',
+	'TOKEN07_SERVERSBOARD_VIEWDETAILS'	=> 'View server details',
+	'TOKEN07_SERVERSBOARD_TIMELONLINE'	=> 'Time online',
 	'TOKEN07_SERVERSBOARD_LASTUPDATED'	=> 'Last updated: %s',
 	'TOKEN07_SERVERSBOARD_CONNECT'		=> 'Connect',
 ));

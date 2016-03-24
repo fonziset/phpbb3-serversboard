@@ -20,8 +20,8 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD'	=> 'Servers Board',
-	'TOKEN07_SERVERSBOARD_ACP_MANAGE'		=> 'Manage Servers',
-	'TOKEN07_SERVERSBOARD_ACP_ADD'			=> 'Add Server',
+	'TOKEN07_SERVERSBOARD_ACP_MANAGE'		=> 'Manage servers',
+	'TOKEN07_SERVERSBOARD_ACP_ADD'			=> 'Add server',
 	'TOKEN07_SERVERSBOARD_ACP_LOG_ADDED'	=> '<strong>Added server to Servers Board</strong><br />» %s',
 	'TOKEN07_SERVERSBOARD_ACP_LOG_UPDATED'	=> '<strong>Updated server on Servers Board</strong><br />» %s',
 	'TOKEN07_SERVERSBOARD_ACP_LOG_DELETE'	=> '<strong>Deleted server from Servers Board</strong><br />» %s',
