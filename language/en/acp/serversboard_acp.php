@@ -39,5 +39,6 @@ $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_ACP_NO_SERVER'			=> 'The specified server does not exist.',
 	'TOKEN07_SERVERSBOARD_ACP_QUERY_PORT'			=> 'Query port',
 	'TOKEN07_SERVERSBOARD_ACP_QUERY_PORT_EXPLAIN'	=> 'Required for Teamspeak servers and may be for certain game servers. Leave blank if not required or to use default value.',
+	'TOKEN07_SERVERSBOARD_ACP_OTHER'				=> 'Other',
 	)
 );

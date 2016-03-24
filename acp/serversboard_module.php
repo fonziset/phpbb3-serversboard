@@ -334,7 +334,7 @@ class serversboard_module
 			}
 		}
 		$template->assign_block_vars('serversboard_base_protocols', array(
-			'CATEGORY'	=> $user->lang('OTHER'),
+			'CATEGORY'	=> $user->lang('TOKEN07_SERVERSBOARD_ACP_OTHER'),
 		));
 		foreach ($baseProtos AS $protocol)
 		{
