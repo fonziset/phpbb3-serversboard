@@ -70,7 +70,7 @@ class serversboard_module
 								$ip = $request->variable('token07_serversboard_ip', '');
 								$port = $request->variable('token07_serversboard_port', 0);
 								$hostname = $request->variable('token07_serversboard_hostname', '');
-								$protocol = $request->variable('server_type', '');
+								$protocol = $request->variable('token07_serversboard_servertype', '');
 								$query_port = $request->variable('server_query_port', 0);
 								$server_ip = $ip . ":" . $port;
 								$server_id = $request->variable('server_id', -1);
@@ -90,7 +90,7 @@ class serversboard_module
 								$phpbb_log->add('admin', $user->data['user_id'], $user->data['session_ip'], 'TOKEN07_SERVERSBOARD_ACP_LOG_UPDATED', time(), array($server_ip));
 								trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_UPDATED'). adm_back_link($this->u_action));
 							}
-							
+
 							$this->tpl_name = 'serversboard_add';
 							$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
 							$server_id = $request->variable('server_id', -1);
@@ -111,6 +111,7 @@ class serversboard_module
 									'SERVER_QUERY_PORT'	=> $row['server_query_port'],
 								));
 								$this->generate_protocol_list();
+								$template->assign_var('EDITING_SERVER', true);
 							}
 							else
 							{

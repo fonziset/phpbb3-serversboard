@@ -21,6 +21,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD'			=> 'Servers Board',
 	'TOKEN07_SERVERSBOARD_ACP_ADD'					=> 'Add servers',
+	'TOKEN07_SERVERSBOARD_ACP_EDIT'					=> 'Edit server',
 	'TOKEN07_SERVERSBOARD_ACP_DISPINDEX'			=> 'Display servers board on index',
 	'TOKEN07_SERVERSBOARD_ACP_UPDATEFREQ'			=> 'Server data update frequency (seconds)',
 	'TOKEN07_SERVERSBOARD_ACP_SERVERIP'				=> 'Server IP',
