@@ -18,12 +18,17 @@ class serversboard_module
 		global $config, $request, $template, $user, $db, $table_prefix, $request, $phpbb_log;
 		//$user->add_lang('acp/common');
 		$user->add_lang_ext('token07/serversboard', 'acp/serversboard_acp');
+
 		switch ($mode)
 		{
 			case 'servers':
+				$this->tpl_name = 'serversboard_manage';
+				$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
 				if (isset($_GET['action']))
 				{
 					$action = $request->variable('action', '');
+					$this->tpl_name = 'serversboard_manage';
+					$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
 					switch ($action)
 					{
 						case 'delete':
@@ -55,26 +60,86 @@ class serversboard_module
 								$json_response->send(array('success' => true));
 								return;
 							}
+						case 'edit':
+							if ($request->is_set_post('submit'))
+							{
+								if (!check_form_key('token07/serversboard'))
+								{
+									trigger_error('FORM_INVALID', E_USER_WARNING);
+								}
+								$ip = $request->variable('token07_serversboard_ip', '');
+								$port = $request->variable('token07_serversboard_port', 0);
+								$hostname = $request->variable('token07_serversboard_hostname', '');
+								$protocol = $request->variable('server_type', '');
+								$query_port = $request->variable('server_query_port', 0);
+								$server_ip = $ip . ":" . $port;
+								$server_id = $request->variable('server_id', -1);
+								if (empty($query_port) || $query_port == 0)
+								{
+									$query_port = NULL;
+								}
+								$data = array(
+									'server_hostname' 	=> $db->sql_escape($hostname),
+									'server_ip'			=> $db->sql_escape($server_ip),
+									'server_type'		=> $db->sql_escape($protocol),
+									'server_query_port'	=> $query_port,
+								);
+								$sql = 'UPDATE ' . $table_prefix . 'serversboard' . ' SET ' . $db->sql_build_array('UPDATE', $data) . '
+									WHERE server_id = ' . $server_id;
+								$db->sql_query($sql);
+								$phpbb_log->add('admin', $user->data['user_id'], $user->data['session_ip'], 'TOKEN07_SERVERSBOARD_ACP_LOG_UPDATED', time(), array($server_ip));
+								trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_UPDATED'). adm_back_link($this->u_action));
+							}
+							
+							$this->tpl_name = 'serversboard_add';
+							$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
+							$server_id = $request->variable('server_id', -1);
+							if ($server_id == -1)
+							{
+								trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_NO_SERVER') . adm_back_link($this->u_action), E_USER_WARNING);
+							}
+							$result = $db->sql_query('SELECT server_hostname, server_ip, server_query_port, server_type, server_query_port FROM ' . $table_prefix . 'serversboard WHERE server_id = ' . $server_id);
+							if ($row = $db->sql_fetchrow($result))
+							{
+								add_form_key('token07/serversboard');
+								$template->assign_vars(array(
+									'SERVER_ID'			=> $server_id,
+									'SERVER_HOSTNAME'	=> htmlentities($row['server_hostname']),
+									'SERVER_IP'			=> substr($row['server_ip'], 0, strpos($row['server_ip'], ':')),
+									'SERVER_PORT'		=> substr($row['server_ip'], strpos($row['server_ip'], ':') + 1),
+									'SERVER_PROTOCOL'	=> htmlentities($row['server_type']),
+									'SERVER_QUERY_PORT'	=> $row['server_query_port'],
+								));
+								$this->generate_protocol_list();
+							}
+							else
+							{
+								trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_NO_SERVER') . adm_back_link($this->u_action), E_USER_WARNING);
+							}
+						break;
 						default:
 						break;
 					}
 				}
-				$this->tpl_name = 'serversboard_manage';
-				$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
-				$result = $db->sql_query("SELECT server_id, server_order, server_ip, server_hostname, server_lastupdate FROM {$table_prefix}serversboard ORDER BY server_order ASC");
-				while ($row = $db->sql_fetchrow($result))
+				else
 				{
-					$tmp = array(
-						'NAME'			=> htmlentities($row['server_hostname']), 
-						'IP'			=> $row['server_ip'],
-						'LASTUPDATE'	=> $user->format_date($row['server_lastupdate']),
-						'U_DELETE'		=> "{$this->u_action}&amp;action=delete&amp;server_id={$row['server_id']}",
-						'U_MOVE_UP'		=> "{$this->u_action}&amp;action=move_up&amp;server_id={$row['server_id']}",
-						'U_MOVE_DOWN'	=> "{$this->u_action}&amp;action=move_down&amp;server_id={$row['server_id']}",
-					);
-					$template->assign_block_vars('serverlist', $tmp);
+					$this->tpl_name = 'serversboard_manage';
+					$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
+					$result = $db->sql_query("SELECT server_id, server_order, server_ip, server_hostname, server_lastupdate FROM {$table_prefix}serversboard ORDER BY server_order ASC");
+					while ($row = $db->sql_fetchrow($result))
+					{
+						$tmp = array(
+							'NAME'			=> htmlentities($row['server_hostname']), 
+							'IP'			=> $row['server_ip'],
+							'LASTUPDATE'	=> $user->format_date($row['server_lastupdate']),
+							'U_DELETE'		=> "{$this->u_action}&amp;action=delete&amp;server_id={$row['server_id']}",
+							'U_EDIT'		=> "{$this->u_action}&amp;action=edit&amp;server_id={$row['server_id']}",
+							'U_MOVE_UP'		=> "{$this->u_action}&amp;action=move_up&amp;server_id={$row['server_id']}",
+							'U_MOVE_DOWN'	=> "{$this->u_action}&amp;action=move_down&amp;server_id={$row['server_id']}",
+						);
+						$template->assign_block_vars('serverlist', $tmp);
+					}
 				}
-				//trigger_error("Not done yet" . adm_back_link($this->u_action), E_USER_WARNING);
 			break;
 			case 'settings':
 				add_form_key('token07/serversboard');
@@ -100,8 +165,6 @@ class serversboard_module
 				));
 			break;
 			case 'add':
-				require_once(__DIR__ . '/../includes/functions_serversboard.php');
-				
 				add_form_key('token07/serversboard');
 				$this->tpl_name = 'serversboard_add';
 				$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_ADD');
@@ -151,7 +214,6 @@ class serversboard_module
 						'server_lastupdate'	=> 0,
 						'server_query_port'	=> (empty($server_queryport)) ? NULL : $server_queryport,
 						'server_type'		=> $db->sql_escape($server_protocol),
-						'server_type'		=> $server_protocol,
 					);
 					$sql = 'INSERT INTO ' . $table_prefix . 'serversboard' . ' ' . $db->sql_build_array('INSERT', $columns);
 					$db->sql_query($sql);
@@ -163,45 +225,7 @@ class serversboard_module
 					$phpbb_log->add('admin', $user->data['user_id'], $user->data['session_ip'], 'TOKEN07_SERVERSBOARD_ACP_LOG_ADDED', time(), array($server_ip));
 					trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_ADDED'). adm_back_link($this->u_action));
 				}
-				$protocols = \token07\serversboard\includes\get_supported_protocols();
-				$curProto = '';
-				$baseProtos = array();
-				$sortExceptions = array('bf3', 'quake3', 'samp', 'ase', 'starmade', 'lhmp'); // Servers that are actually games
-				foreach ($protocols AS $protocol)
-				{
-					//var_dump($className, $protocol['protocol']);
-					//var_dump($protocol['short'],in_array($protocol['short'], $sortExceptions));
-					if ( ($protocol['short'] != $protocol['protocol']) || ($protocol['short'] == $protocol['protocol'] && in_array($protocol['short'], $sortExceptions)) )
-					{
-						if ($protocol['protocol'] != $curProto)
-						{
-							//print_r($protocol['protocol']);
-							$curProto = $protocol['protocol'];
-							$template->assign_block_vars('serversboard_base_protocols', array(
-								'CATEGORY'	=> $protocol['protocol'],
-							));
-						}
-						$template->assign_block_vars('serversboard_base_protocols.protocols', array(
-							'NAME'		=> $protocol['name'],
-							'VALUE'		=> $protocol['protocol'],
-						));
-					}
-					else
-					{
-						$baseProtos[] = $protocol;
-					}
-				}
-				$template->assign_block_vars('serversboard_base_protocols', array(
-					'CATEGORY'	=> $user->lang('OTHER'),
-				));
-				foreach ($baseProtos AS $protocol)
-				{
-					//print_r($protocol);
-					$template->assign_block_vars('serversboard_base_protocols.protocols', array(
-							'NAME'		=> $protocol['name'],
-							'VALUE'		=> $protocol['protocol'],
-					));
-				}
+				$this->generate_protocol_list();
 				//var_dump($protocols);
 			break;
 		}
@@ -276,6 +300,47 @@ class serversboard_module
 			$db->sql_transaction('commit');
 			//$this->cache->destroy('sql', TEAMPAGE_TABLE);
 			return true;
+		}
+	}
+	function generate_protocol_list()
+	{
+		require_once(__DIR__ . '/../includes/functions_serversboard.php');
+		global $template, $user;
+		
+		$protocols = \token07\serversboard\includes\get_supported_protocols();
+		$curProto = '';
+		$baseProtos = array();
+		$sortExceptions = array('bf3', 'quake3', 'samp', 'ase', 'starmade', 'lhmp'); // Servers that are actually games
+		foreach ($protocols AS $protocol)
+		{
+			if ( ($protocol['short'] != $protocol['protocol']) || ($protocol['short'] == $protocol['protocol'] && in_array($protocol['short'], $sortExceptions)) )
+			{
+				if ($protocol['protocol'] != $curProto)
+				{
+					$curProto = $protocol['protocol'];
+					$template->assign_block_vars('serversboard_base_protocols', array(
+						'CATEGORY'	=> $protocol['protocol'],
+					));
+				}
+				$template->assign_block_vars('serversboard_base_protocols.protocols', array(
+					'NAME'		=> $protocol['name'],
+					'VALUE'		=> $protocol['short'],
+				));
+			}
+			else
+			{
+				$baseProtos[] = $protocol;
+			}
+		}
+		$template->assign_block_vars('serversboard_base_protocols', array(
+			'CATEGORY'	=> $user->lang('OTHER'),
+		));
+		foreach ($baseProtos AS $protocol)
+		{
+			$template->assign_block_vars('serversboard_base_protocols.protocols', array(
+					'NAME'		=> $protocol['name'],
+					'VALUE'		=> $protocol['protocol'],
+			));
 		}
 	}
 }

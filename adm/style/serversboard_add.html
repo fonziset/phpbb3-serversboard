@@ -7,19 +7,19 @@
 		<dl>
 			<dt><label for="token07_serversboard_ip">{L_TOKEN07_SERVERSBOARD_ACP_SERVERIP}</label></dt>
 			<dd>
-				<input type="text" name="token07_serversboard_ip">
+				<input type="text" name="token07_serversboard_ip" value="{SERVER_IP}" />
 			</dd>
 		</dl>
 		<dl>
 			<dt><label for="token07_serversboard_port">{L_TOKEN07_SERVERSBOARD_ACP_SERVERPORT}</label></dt>
 			<dd>
-				<input type="text" name="token07_serversboard_port">
+				<input type="text" name="token07_serversboard_port" value="{SERVER_PORT}" />
 			</dd>
 		</dl>
 		<dl>
 			<dt><label for="token07_serversboard_hostname">{L_TOKEN07_SERVERSBOARD_ACP_HOSTNAME}</label></dt>
 			<dd>
-				<input type="text" name="token07_serversboard_hostname">
+				<input type="text" name="token07_serversboard_hostname" value="{SERVER_HOSTNAME}" />
 			</dd>
 		</dl>
 		<dl>
@@ -29,7 +29,7 @@
 					<!-- BEGIN serversboard_base_protocols -->
 					<optgroup label="{serversboard_base_protocols.CATEGORY}">
 						<!-- BEGIN serversboard_base_protocols.protocols -->
-						<option value="{serversboard_base_protocols.protocols.VALUE}">{serversboard_base_protocols.protocols.NAME}</option>
+						<option value="{serversboard_base_protocols.protocols.VALUE}"<!-- IF serversboard_base_protocols.protocols.VALUE == SERVER_PROTOCOL --> selected="selected"<!-- ENDIF -->>{serversboard_base_protocols.protocols.NAME}</option>
 						<!-- END serversboard_base_protocols.protocols -->
 					</optgroup>
 					<!-- END serversboard_base_protocols -->
@@ -43,7 +43,7 @@
 				<span>{L_TOKEN07_SERVERSBOARD_ACP_QUERY_PORT_EXPLAIN}</span>
 			</dt>
 			<dd>
-				<input type="number" name="token07_serversboard_queryport" />
+				<input type="number" name="token07_serversboard_queryport" value="{SERVER_QUERY_PORT}" />
 			</dd>
 		</dl>
 		<p class="submit-buttons">
