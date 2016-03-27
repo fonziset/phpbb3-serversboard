@@ -89,8 +89,13 @@ class update_serversboard extends \phpbb\cron\task\base
 				{
 					$player['time'] = 0;
 				}
+				// SRCDS doesn't always give back valid UTF-8
+				if (!preg_match('//u', $player['gq_name']))
+				{
+					$player['gq_name'] = utf8_encode($player['gq_name']);
+				}
 				$players[] = array(
-					'Name'	=> $this->db->sql_escape(utf8_encode($player['gq_name'])),
+					'Name'	=> $this->db->sql_escape($player['gq_name']),
 					'TimeF'	=> gmdate(($player['time'] > 3600 ? "H:i:s" : "i:s" ), $player['time']),
 				);
 			}
