@@ -60,6 +60,8 @@ class serversboard_module
 								$json_response->send(array('success' => true));
 								return;
 							}
+							$this->generate_server_list();
+						break;
 						case 'edit':
 							if ($request->is_set_post('submit'))
 							{
@@ -126,20 +128,7 @@ class serversboard_module
 				{
 					$this->tpl_name = 'serversboard_manage';
 					$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
-					$result = $db->sql_query("SELECT server_id, server_order, server_ip, server_hostname, server_lastupdate FROM {$table_prefix}serversboard ORDER BY server_order ASC");
-					while ($row = $db->sql_fetchrow($result))
-					{
-						$tmp = array(
-							'NAME'			=> htmlentities($row['server_hostname']), 
-							'IP'			=> $row['server_ip'],
-							'LASTUPDATE'	=> $user->format_date($row['server_lastupdate']),
-							'U_DELETE'		=> "{$this->u_action}&amp;action=delete&amp;server_id={$row['server_id']}",
-							'U_EDIT'		=> "{$this->u_action}&amp;action=edit&amp;server_id={$row['server_id']}",
-							'U_MOVE_UP'		=> "{$this->u_action}&amp;action=move_up&amp;server_id={$row['server_id']}",
-							'U_MOVE_DOWN'	=> "{$this->u_action}&amp;action=move_down&amp;server_id={$row['server_id']}",
-						);
-						$template->assign_block_vars('serverlist', $tmp);
-					}
+					$this->generate_server_list();
 				}
 			break;
 			case 'settings':
@@ -342,6 +331,24 @@ class serversboard_module
 					'NAME'		=> $protocol['name'],
 					'VALUE'		=> $protocol['protocol'],
 			));
+		}
+	}
+	function generate_server_list()
+	{
+		global $db, $user, $template, $table_prefix;
+		$result = $db->sql_query("SELECT server_id, server_order, server_ip, server_hostname, server_lastupdate FROM {$table_prefix}serversboard ORDER BY server_order ASC");
+		while ($row = $db->sql_fetchrow($result))
+		{
+			$tmp = array(
+				'NAME'			=> htmlentities($row['server_hostname']),
+				'IP'			=> $row['server_ip'],
+				'LASTUPDATE'	=> $user->format_date($row['server_lastupdate']),
+				'U_DELETE'		=> "{$this->u_action}&amp;action=delete&amp;server_id={$row['server_id']}",
+				'U_EDIT'		=> "{$this->u_action}&amp;action=edit&amp;server_id={$row['server_id']}",
+				'U_MOVE_UP'		=> "{$this->u_action}&amp;action=move_up&amp;server_id={$row['server_id']}",
+				'U_MOVE_DOWN'	=> "{$this->u_action}&amp;action=move_down&amp;server_id={$row['server_id']}",
+			);
+			$template->assign_block_vars('serverlist', $tmp);
 		}
 	}
 }
