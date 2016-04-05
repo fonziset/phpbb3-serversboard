@@ -20,7 +20,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD'			=> 'Servers Board',
-	'TOKEN07_SERVERSBOARD_ACP_ADD'					=> 'Add servers',
+	'TOKEN07_SERVERSBOARD_ACP_ADD'					=> 'Add server',
 	'TOKEN07_SERVERSBOARD_ACP_EDIT'					=> 'Edit server',
 	'TOKEN07_SERVERSBOARD_ACP_DISPINDEX'			=> 'Display servers board on index',
 	'TOKEN07_SERVERSBOARD_ACP_UPDATEFREQ'			=> 'Server data update frequency (seconds)',
@@ -29,8 +29,8 @@ $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_ACP_HOSTNAME'				=> 'Hostname',
 	'TOKEN07_SERVERSBOARD_ACP_HOSTNAME2'			=> 'Host name',
 	'TOKEN07_SERVERSBOARD_ACP_SERVERTYPE'			=> 'Server type',
-	'TOKEN07_SERVERSBOARD_ACP_INVALIDIP'			=> 'The IP address entered was invalid.',
-	'TOKEN07_SERVERSBOARD_ACP_INVALIDPORT'			=> 'The port number entered was invalid.',
+	'TOKEN07_SERVERSBOARD_ACP_INVALIDIP'			=> 'The IP address entered is invalid.',
+	'TOKEN07_SERVERSBOARD_ACP_INVALIDPORT'			=> 'The port number entered is invalid.',
 	'TOKEN07_SERVERSBOARD_ACP_CONFIRMDEL'			=> 'Are you sure you want to delete this server?',
 	'TOKEN07_SERVERSBOARD_ACP_DELETED'				=> 'The server was successfully deleted.',
 	'TOKEN07_SERVERSBOARD_ACP_ADDED'				=> 'The server was successfully added.',
@@ -40,7 +40,7 @@ $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_ACP_QUERY_PORT'			=> 'Query port',
 	'TOKEN07_SERVERSBOARD_ACP_QUERY_PORT_EXPLAIN'	=> 'Required for Teamspeak servers and may be for certain game servers. Leave blank if not required or to use default value.',
 	'TOKEN07_SERVERSBOARD_ACP_OTHER'				=> 'Other',
-	'TOKEN07_SERVERSBOARD_ACP_SHOW_GAMETRACKER'		=> 'Show GameTracker link for this server:',
+	'TOKEN07_SERVERSBOARD_ACP_SHOW_GAMETRACKER'		=> 'Show GameTracker link for this server',
 	'TOKEN07_SERVERSBOARD_ACP_SHOW_TIME_ONLINE'		=> 'Show the "Time Online" column in player list for this server:',
 	)
 );
