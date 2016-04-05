@@ -74,13 +74,13 @@ class update_serversboard extends \phpbb\cron\task\base
 			$newDetails = array(
 				'server_status'		=> $offline,
 				'server_players'	=> sprintf('%d / %d', $result['gq_numplayers'], $result['gq_maxplayers']),
-				'server_map'		=> (isset($result['gq_mapname'])) ? $this->db->sql_escape($result['gq_mapname']) : '',
+				'server_map'		=> (isset($result['gq_mapname'])) ? $result['gq_mapname'] : '',
 				'server_lastupdate'	=> time(),
-				'server_join_link'	=> $this->db->sql_escape($result['gq_joinlink']),
+				'server_join_link'	=> $result['gq_joinlink'],
 			);
 			if (!$offline || !empty($result['gq_hostname']))
 			{
-				$newDetails['server_hostname'] = $this->db->sql_escape($result['gq_hostname']);
+				$newDetails['server_hostname'] = $result['gq_hostname'];
 			}
 			$players = array();
 			foreach ($result['players'] AS $player)
@@ -95,7 +95,7 @@ class update_serversboard extends \phpbb\cron\task\base
 					$player['gq_name'] = utf8_encode($player['gq_name']);
 				}
 				$players[] = array(
-					'Name'	=> $this->db->sql_escape($player['gq_name']),
+					'Name'	=> $player['gq_name'],
 					'TimeF'	=> gmdate(($player['time'] > 3600 ? "H:i:s" : "i:s" ), $player['time']),
 				);
 			}
