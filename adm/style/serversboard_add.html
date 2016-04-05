@@ -49,6 +49,23 @@
 				<input type="number" name="token07_serversboard_queryport" value="{SERVER_QUERY_PORT}" />
 			</dd>
 		</dl>
+		<dl>
+			<dt>
+				<label for="token07_serversboard_gametracker">{L_TOKEN07_SERVERSBOARD_ACP_SHOW_GAMETRACKER}</label>
+			</dt>
+			<dd>
+				<input type="checkbox" name="token07_serversboard_gametracker" <!-- IF SERVER_SHOW_GT -->checked="checked" <!-- ENDIF -->/>
+			</dd>
+		</dl>
+		<dl>
+			<dt>
+				<label for="token07_serversboard_timeonline">{L_TOKEN07_SERVERSBOARD_ACP_SHOW_TIME_ONLINE}</label>
+			</dt>
+			<dd>
+				<input type="checkbox" name="token07_serversboard_timeonline" <!-- IF SERVER_SHOW_TIME -->checked="checked" <!-- ENDIF -->/>
+			</dd>
+		</dl>
+
 		<p class="submit-buttons">
 			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
 			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />

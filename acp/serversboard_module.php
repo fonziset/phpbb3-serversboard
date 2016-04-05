@@ -71,20 +71,24 @@ class serversboard_module
 								}
 								$ip = $request->variable('token07_serversboard_ip', '');
 								$port = $request->variable('token07_serversboard_port', 0);
-								$hostname = $request->variable('token07_serversboard_hostname', '');
+								$hostname = $request->variable('token07_serversboard_hostname', '', true);
 								$protocol = $request->variable('token07_serversboard_servertype', '');
 								$query_port = $request->variable('server_query_port', 0);
 								$server_ip = $ip . ":" . $port;
 								$server_id = $request->variable('server_id', -1);
+								$server_show_gt = (bool) $request->variable('token07_serversboard_gametracker', '');
+								$server_show_times = (bool) $request->variable('token07_serversboard_timeonline', '');
 								if (empty($query_port) || $query_port == 0)
 								{
 									$query_port = NULL;
 								}
 								$data = array(
-									'server_hostname' 	=> $db->sql_escape($hostname),
-									'server_ip'			=> $db->sql_escape($server_ip),
-									'server_type'		=> $db->sql_escape($protocol),
-									'server_query_port'	=> $query_port,
+									'server_hostname' 				=> $hostname,
+									'server_ip'						=> $server_ip,
+									'server_type'					=> $protocol,
+									'server_query_port'				=> $query_port,
+									'server_show_gametracker'		=> $server_show_gt,
+									'server_show_time_online'		=> $server_show_times,
 								);
 								$sql = 'UPDATE ' . $table_prefix . 'serversboard' . ' SET ' . $db->sql_build_array('UPDATE', $data) . '
 									WHERE server_id = ' . $server_id;
@@ -100,7 +104,7 @@ class serversboard_module
 							{
 								trigger_error($user->lang('TOKEN07_SERVERSBOARD_ACP_NO_SERVER') . adm_back_link($this->u_action), E_USER_WARNING);
 							}
-							$result = $db->sql_query('SELECT server_hostname, server_ip, server_query_port, server_type, server_query_port FROM ' . $table_prefix . 'serversboard WHERE server_id = ' . $server_id);
+							$result = $db->sql_query('SELECT server_hostname, server_ip, server_query_port, server_type, server_query_port, server_show_gametracker, server_show_time_online FROM ' . $table_prefix . 'serversboard WHERE server_id = ' . $server_id);
 							if ($row = $db->sql_fetchrow($result))
 							{
 								add_form_key('token07/serversboard');
@@ -111,6 +115,8 @@ class serversboard_module
 									'SERVER_PORT'		=> substr($row['server_ip'], strpos($row['server_ip'], ':') + 1),
 									'SERVER_PROTOCOL'	=> htmlentities($row['server_type']),
 									'SERVER_QUERY_PORT'	=> $row['server_query_port'],
+									'SERVER_SHOW_GT'	=> $row['server_show_gametracker'],
+									'SERVER_SHOW_TIME'	=> $row['server_show_time_online'],
 								));
 								$this->generate_protocol_list();
 								$template->assign_var('EDITING_SERVER', true);
