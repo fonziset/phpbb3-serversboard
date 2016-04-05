@@ -74,19 +74,19 @@ class main_listener implements EventSubscriberInterface
 	private function setTemplateVars($row)
 	{
 		$tmp = array(
-			'STATUS'	=> $row['server_status'],
-			'HOSTNAME'	=> $row['server_hostname'],
-			'IP'		=> $row['server_ip'],
-			'PLAYERS'	=> $row['server_players'],
-			'MAP'		=> $row['server_map'],
-			'JOINLINK'	=> $row['server_join_link'],
+			'STATUS'		=> $row['server_status'],
+			'HOSTNAME'		=> $row['server_hostname'],
+			'IP'			=> $row['server_ip'],
+			'PLAYERS'		=> $row['server_players'],
+			'MAP'			=> $row['server_map'],
+			'JOINLINK'		=> $row['server_join_link'],
+			'GAMETRACKER'	=> $row['server_show_gametracker'],
 		);
 		$proto = substr($row['server_join_link'], 0, strpos($row['server_join_link'], ':'));
 		switch ($proto)
 		{
 			case 'steam':
 				$tmp['ICON'] = 'steam';
-				$tmp['GAMETRACKER'] = true;
 			break;
 			case 'teamspeak':
 			case 'ts3server':
@@ -94,7 +94,6 @@ class main_listener implements EventSubscriberInterface
 			break;
 			case 'minecraft':
 				$tmp['ICON'] = 'minecraft';
-				$tmp['GAMETRACKER'] = true;
 			break;
 		}
 		if (!$row['server_status'])

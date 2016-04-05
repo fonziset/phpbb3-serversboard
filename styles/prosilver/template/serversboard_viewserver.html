@@ -8,7 +8,7 @@
 	<thead>
 		<tr style="text-align: left">
 			<th>{L_USERNAME}</th>
-			<th>{L_TOKEN07_SERVERSBOARD_TIMELONLINE}</th>
+			<!-- IF SHOW_TIMES --><th>{L_TOKEN07_SERVERSBOARD_TIMELONLINE}</th><!-- ENDIF -->
 		</tr>
 	</thead>
 	<tbody>
@@ -20,7 +20,7 @@
 	<!-- BEGIN players -->
 		<tr class="bg<!-- IF players.S_ROW_COUNT is even -->1<!-- ELSE -->2<!-- ENDIF -->">
 			<td>{players.NAME}</td>
-			<td>{players.TIME}</td>
+			<!-- IF SHOW_TIMES --><td>{players.TIME}</td><!-- ENDIF -->
 		</tr>
 	<!-- END players -->
 	<!-- IF SERVER_OFFLINE -->

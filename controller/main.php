@@ -36,19 +36,19 @@ class main
 	private function setTemplateVars($row)
 	{
 		$tmp = array(
-			'STATUS'	=> $row['server_status'],
-			'HOSTNAME'	=> $row['server_hostname'],
-			'IP'		=> $row['server_ip'],
-			'PLAYERS'	=> $row['server_players'],
-			'MAP'		=> $row['server_map'],
-			'JOINLINK'	=> $row['server_join_link'],
+			'STATUS'		=> $row['server_status'],
+			'HOSTNAME'		=> $row['server_hostname'],
+			'IP'			=> $row['server_ip'],
+			'PLAYERS'		=> $row['server_players'],
+			'MAP'			=> $row['server_map'],
+			'JOINLINK'		=> $row['server_join_link'],
+			'GAMETRACKER'	=> $row['server_show_gametracker'],
 		);
 		$proto = substr($row['server_join_link'], 0, strpos($row['server_join_link'], ':'));
 		switch ($proto)
 		{
 			case 'steam':
 				$tmp['ICON'] = 'steam';
-				$tmp['GAMETRACKER'] = true;
 			break;
 			case 'teamspeak':
 			case 'ts3server':
@@ -56,7 +56,6 @@ class main
 			break;
 			case 'minecraft':
 				$tmp['ICON'] = 'minecraft';
-				$tmp['GAMETRACKER'] = true;
 			break;
 		}
 		if (!$row['server_status'])
@@ -72,7 +71,7 @@ class main
 	{
 		global $table_prefix;
 		$this->setBreadcrumbs();
-		$result = $this->db->sql_query("SELECT server_id, server_order, server_ip, server_status, server_hostname, server_map, server_players, server_join_link FROM {$table_prefix}serversboard ORDER BY server_order");
+		$result = $this->db->sql_query("SELECT server_id, server_order, server_ip, server_status, server_hostname, server_map, server_players, server_join_link, server_show_time_online, server_show_gametracker FROM {$table_prefix}serversboard ORDER BY server_order");
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$this->setTemplateVars($row);
@@ -112,6 +111,7 @@ class main
 			unset($row['server_playerlist']);
 			$this->setTemplateVars(array_map('htmlentities',$row));
 			$this->template->assign_var('SERVER_EMPTY', $playerList == "[]");
+			$this->template->assign_var('SHOW_TIMES', $row['server_show_time_online']);
 			foreach (json_decode($playerList) AS $player)
 			{
 				$pData = array_map('htmlentities', array('NAME' => $player->Name, 'TIME' => $player->TimeF));
