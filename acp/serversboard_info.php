@@ -19,17 +19,17 @@ class serversboard_info
 			'modes'		=> array(
 				'servers'	=> array(
 					'title' => 'TOKEN07_SERVERSBOARD_ACP_MANAGE',
-					'auth'	=> 'acl_a_',
+					'auth'	=> 'ext_token07/serversboard && acl_a_serversboard',
 					'cat'	=> 'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD',
 				),
 				'settings'	=> array(
 					'title' => 'GENERAL_SETTINGS',
-					'auth'	=> 'acl_a_',
+					'auth'	=> 'ext_token07/serversboard && acl_a_serversboard',
 					'cat'	=> 'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD',
 				),
 				'add'	=> array(
 					'title' => 'TOKEN07_SERVERSBOARD_ACP_ADD',
-					'auth'	=> 'acl_a_',
+					'auth'	=> 'ext_token07/serversboard && acl_a_serversboard',
 					'cat'	=> 'TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD',
 				),
 			),

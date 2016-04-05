@@ -24,6 +24,7 @@ class main_listener implements EventSubscriberInterface
 		return array(
 			'core.user_setup'	=> 'load_language_on_setup',
 			'core.index_modify_page_title'	=> 'load_serversboard',
+			'core.permissions'		=> 'add_permission',
 		);
 	}
 
@@ -63,6 +64,12 @@ class main_listener implements EventSubscriberInterface
 				$this->setTemplateVars($row);
 			}
 		}
+	}
+	public function add_permission($event)
+	{
+		$permissions = $event['permissions'];
+		$permissions['a_serversboard'] = array('lang' => 'ACL_A_SERVERSBOARD', 'cat' => 'misc');
+		$event['permissions'] = $permissions;
 	}
 	private function setTemplateVars($row)
 	{
