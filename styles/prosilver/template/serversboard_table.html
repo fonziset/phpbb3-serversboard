@@ -3,8 +3,10 @@
 		<ul class="topiclist">
 			<li class="header">
 				<dl class="serversboard">
-					<dt class="serverstatus">{L_TOKEN07_SERVERSBOARD_STATUS}</dt>
-					<dd class="servername">{L_TOKEN07_SERVERSBOARD_NAME}</dd>
+					<dt class="servername">
+						<span class="responsive-hide">{L_TOKEN07_SERVERSBOARD_NAME}</span>
+						<span class="responsive-show" style="display: none;"><strong>{L_TOKEN07_SERVERSBOARD_SERVERSBOARD}</strong></span>
+					</dt>
 					<dd class="serverip">{L_IP}</dd>
 					<dd class="playercount">{L_TOKEN07_SERVERSBOARD_PLAYERS}</dd>
 					<dd class="mapname">{L_TOKEN07_SERVERSBOARD_MAP}</dd>
@@ -16,17 +18,18 @@
 			<!-- BEGIN serverlist -->
 			<li class="row">
 				<dl class="serversboard serversboarddata">
-					<dt class="serverstatus">
-						<div style="padding-left: 10px"><!-- IF serverlist.STATUS -->{L_ONLINE}<!-- ELSE -->{L_OFFLINE}<!-- ENDIF --></div>
+					<dt class="servername">
+						<div class="responsive-hide" style="margin-right: 550px">
+							<a href="{serverlist.LINK}" class="forumtitle">{serverlist.HOSTNAME}</a>
+						</div>
 						<div class="responsive-show" style="display: none;">
-							{serverlist.HOSTNAME}
+							<a href="{serverlist.LINK}" class="forumtitle">{serverlist.HOSTNAME}</a>
 							<br /> {serverlist.PLAYERS}
 							<br /> {serverlist.MAP}
 							<br /> <a href="steam://connect/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/steam_16.png" /></a>
 							<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" /></a>
 						</div>
 					</dt>
-					<dd class="servername"><a href="{serverlist.LINK}" class="forumtitle">{serverlist.HOSTNAME}</a></dd>
 					<dd class="serverip">{serverlist.IP}</dd>
 					<dd class="playercount"><a href="{serverlist.LINK}" data-ajax="true">{serverlist.PLAYERS}</a></dd>
 					<!-- IF serverlist.MAP -->
