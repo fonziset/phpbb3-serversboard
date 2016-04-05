@@ -120,5 +120,6 @@ class main
 			$this->template->assign_var('SERVERSBOARD_SERVER_LAST_UPDATE', $this->user->lang('TOKEN07_SERVERSBOARD_LASTUPDATED', $this->user->format_date($row['server_lastupdate'])) );
 			return $this->helper->render('serversboard_viewserver.html', $this->user->lang('TOKEN07_SERVERSBOARD_SERVERSBOARD'));
 		}
+		throw new \phpbb\exception\http_exception(404, 'TOKEN07_SERVERSBOARD_INVALID');
 	}
 }

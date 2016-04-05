@@ -31,4 +31,5 @@ $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_TIMELONLINE'	=> 'Time online',
 	'TOKEN07_SERVERSBOARD_LASTUPDATED'	=> 'Last updated: %s',
 	'TOKEN07_SERVERSBOARD_CONNECT'		=> 'Connect',
+	'TOKEN07_SERVERSBOARD_INVALID'		=> 'The server you selected does not exist.',
 ));
