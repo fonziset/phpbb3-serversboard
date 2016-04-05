@@ -37,15 +37,12 @@ class update_serversboard extends \phpbb\cron\task\base
 	}
 	public function run()
 	{
-		global $phpbb_log;
-
 		$GameQ = new \GameQ\GameQ();
 		$servers = array();
 		$result = $this->db->sql_query('SELECT server_type, server_ip, server_id, server_query_port FROM ' . $this->serversboard_table);
 		
 		while ($row = $this->db->sql_fetchrow($result))
 		{
-			$sData = explode(":", $row['server_ip']);
 			$server = array(
 				'type'	=> $row['server_type'],
 				'host'	=> $row['server_ip'],
@@ -109,7 +106,6 @@ class update_serversboard extends \phpbb\cron\task\base
 			$sql = 'UPDATE ' . $this->serversboard_table . ' SET ' . $this->db->sql_build_array('UPDATE', $newDetails) . '
 				WHERE server_id = ' . (int) $server;
 			$this->db->sql_query($sql);
-			//var_dump($result);
 		}
 		$this->config->set('serversboard_update_last_run', time());
 	}
