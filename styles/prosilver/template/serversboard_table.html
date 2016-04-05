@@ -20,14 +20,21 @@
 				<dl class="serversboard serversboarddata">
 					<dt class="servername">
 						<div class="responsive-hide" style="margin-right: 550px">
-							<a href="{serverlist.LINK}" class="forumtitle">{serverlist.HOSTNAME}</a>
+							<a href="{serverlist.LINK}" class="forumtitle"><!-- IF serverlist.HOSTNAME-->{serverlist.HOSTNAME}<!-- ELSE -->&nbsp;<!-- ENDIF --></a>
 						</div>
 						<div class="responsive-show" style="display: none;">
 							<a href="{serverlist.LINK}" class="forumtitle">{serverlist.HOSTNAME}</a>
 							<br /> {serverlist.PLAYERS}
 							<br /> {serverlist.MAP}
-							<br /> <a href="steam://connect/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/steam_16.png" /></a>
-							<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" /></a>
+							<br />
+							<!-- IF serverlist.ICON -->
+							<a href="{serverlist.JOINLINK}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/{serverlist.ICON}_16.png" class="serveropt"/></a>
+							<!-- ELSEIF serverlist.JOINLINK -->
+							<a href="{serverlist.JOINLINK}">{L_TOKEN07_SERVERSBOARD_CONNECT}</a>
+							<!-- ENDIF -->
+							<!-- IF serverlist.GAMETRACKER -->
+							<a href="//www.gametracker.com/server_info/{serverlist.IP}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/gametracker_16.png" class="serveropt" /></a>
+							<!-- ENDIF -->
 						</div>
 					</dt>
 					<dd class="serverip">{serverlist.IP}</dd>
@@ -40,7 +47,7 @@
 					<dd class="serveroptions">
 						<div class="serverdata">
 							<!-- IF serverlist.ICON -->
-							<a href="{serverlist.JOINLINK}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/{serverlist.ICON}_16.png" class="serveropt"/> </a>
+							<a href="{serverlist.JOINLINK}"><img src="{ROOT_PATH}ext/token07/serversboard/styles/prosilver/theme/images/{serverlist.ICON}_16.png" class="serveropt"/></a>
 							<!-- ELSEIF serverlist.JOINLINK -->
 							<a href="{serverlist.JOINLINK}">{L_TOKEN07_SERVERSBOARD_CONNECT}</a>
 							<!-- ENDIF -->
