@@ -16,14 +16,16 @@ class update_serversboard extends \phpbb\cron\task\base
 {
 	protected $config;
 	protected $db;
+	protected $serversboard_table;
 	
 	/**
 	* Constructor.
 	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\factory $db)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\factory $db, $serversboard_table)
 	{
 		$this->config = $config;
 		$this->db = $db;
+		$this->serversboard_table = $serversboard_table;
 	}
 	public function is_runnable()
 	{
@@ -35,11 +37,11 @@ class update_serversboard extends \phpbb\cron\task\base
 	}
 	public function run()
 	{
-		global $phpbb_log, $table_prefix, $phpbb_log;
+		global $phpbb_log;
 
 		$GameQ = new \GameQ\GameQ();
 		$servers = array();
-		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard");
+		$result = $this->db->sql_query('SELECT server_type, server_ip, server_id, server_query_port FROM ' . $this->serversboard_table);
 		
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -63,10 +65,12 @@ class update_serversboard extends \phpbb\cron\task\base
 			}
 			$servers[] = $server;
 		}
+		
+		$this->db->sql_freeresult($result);
 		$GameQ->addServers($servers);
 		$GameQ->setOption('timeout', 5);
 		$results = $GameQ->process();
-		//print_r($results);
+
 		foreach ($results as $server => $result)
 		{
 			$offline = (!empty($result['gq_online'])) ? $result['gq_online'] : 0;
@@ -81,7 +85,9 @@ class update_serversboard extends \phpbb\cron\task\base
 			{
 				$newDetails['server_hostname'] = $result['gq_hostname'];
 			}
+			
 			$players = array();
+
 			foreach ($result['players'] AS $player)
 			{
 				if (empty($player['time']))
@@ -98,9 +104,9 @@ class update_serversboard extends \phpbb\cron\task\base
 					'TimeF'	=> gmdate(($player['time'] > 3600 ? "H:i:s" : "i:s" ), $player['time']),
 				);
 			}
+
 			$newDetails['server_playerlist'] = json_encode($players);
-			
-			$sql = 'UPDATE ' . $table_prefix . 'serversboard' . ' SET ' . $this->db->sql_build_array("UPDATE", $newDetails) . '
+			$sql = 'UPDATE ' . $this->serversboard_table . ' SET ' . $this->db->sql_build_array('UPDATE', $newDetails) . '
 				WHERE server_id = ' . (int) $server;
 			$this->db->sql_query($sql);
 			//var_dump($result);

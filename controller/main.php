@@ -17,14 +17,16 @@ class main
 	protected $template;
 	protected $user;
 	protected $db;
+	protected $serversboard_table;
 	
-	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\user $user, \phpbb\db\driver\factory $db)
+	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\user $user, \phpbb\db\driver\factory $db, $serversboard_table)
 	{
 		$this->config = $config;
 		$this->helper = $helper;
 		$this->template = $template;
 		$this->user = $user;
 		$this->db = $db;
+		$this->serversboard_table = $serversboard_table;
 	}
 	private function setBreadcrumbs()
 	{
@@ -71,7 +73,7 @@ class main
 	{
 		global $table_prefix;
 		$this->setBreadcrumbs();
-		$result = $this->db->sql_query("SELECT server_id, server_order, server_ip, server_status, server_hostname, server_map, server_players, server_join_link, server_show_time_online, server_show_gametracker FROM {$table_prefix}serversboard ORDER BY server_order");
+		$result = $this->db->sql_query('SELECT server_id, server_order, server_ip, server_status, server_hostname, server_map, server_players, server_join_link, server_show_time_online, server_show_gametracker FROM ' . $this->serversboard_table . ' ORDER BY server_order');
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$this->setTemplateVars($row);

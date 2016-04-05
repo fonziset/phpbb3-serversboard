@@ -7,6 +7,7 @@ services:
             - '@template'
             - '@user'
             - '@dbal.conn'
+            - '%token07.serversboard.tables.serversboard%'
     token07.serversboard.listener:
         class: token07\serversboard\event\main_listener
         arguments:
@@ -14,6 +15,7 @@ services:
             - '@template'
             - '@config'
             - '@dbal.conn'
+            - '%token07.serversboard.tables.serversboard%'
         tags:
             - { name: event.listener }
     token07.serversboard.cron.task.update_serversboard:
@@ -21,7 +23,10 @@ services:
         arguments:
             - '@config'
             - '@dbal.conn'
+            - '%token07.serversboard.tables.serversboard%'
         calls:
             - [set_name, [cron.task.update_serversboard]]
         tags:
             - { name: cron.task }
+parameters:
+    token07.serversboard.tables.serversboard: %core.table_prefix%serversboard

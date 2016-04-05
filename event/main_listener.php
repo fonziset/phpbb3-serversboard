@@ -18,6 +18,7 @@ class main_listener implements EventSubscriberInterface
 	protected $template;
 	protected $config;
 	protected $db;
+	protected $serversboard_table;
 	
 	static public function getSubscribedEvents()
 	{
@@ -28,12 +29,13 @@ class main_listener implements EventSubscriberInterface
 		);
 	}
 
-	public function __construct(\phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\config\config $config, \phpbb\db\driver\factory $db)
+	public function __construct(\phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\config\config $config, \phpbb\db\driver\factory $db, $serversboard_table)
 	{
 		$this->helper = $helper;
 		$this->template = $template;
 		$this->config = $config;
 		$this->db = $db;
+		$this->serversboard_table = $serversboard_table;
 	}
 
 	public function load_language_on_setup($event)
@@ -50,11 +52,10 @@ class main_listener implements EventSubscriberInterface
 	
 	public function load_serversboard($page_title)
 	{
-		global $table_prefix;
 		if ($this->config['serversboard_enable'])
 		{
 			$this->template->assign_var('TOKEN07_SERVERSBOARD_ENABLE', true);
-			$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard ORDER BY server_order");
+			$result = $this->db->sql_query('SELECT * FROM ' . $this->serversboard_table . ' ORDER BY server_order');
 			while ($row = $this->db->sql_fetchrow($result))
 			{
 				/*
