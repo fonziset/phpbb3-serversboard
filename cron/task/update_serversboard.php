@@ -28,7 +28,6 @@ class update_serversboard extends \phpbb\cron\task\base
 	public function is_runnable()
 	{
 		return true;
-		return (bool) $this->config['serversboard_enable'];
 	}
 	public function should_run()
 	{
