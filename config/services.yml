@@ -28,5 +28,15 @@ services:
             - [set_name, [cron.task.update_serversboard]]
         tags:
             - { name: cron.task }
+    token07.serversboard.admin_controller:
+        class: token07\serversboard\controller\admin_controller
+        arguments:
+            - '@config'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '@dbal.conn'
+            - '@log'
+            - '%token07.serversboard.tables.serversboard%'
 parameters:
     token07.serversboard.tables.serversboard: %core.table_prefix%serversboard
