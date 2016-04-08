@@ -79,7 +79,7 @@ class admin_controller
 				$max = $row['max']+1;
 			}
 			$this->db->sql_freeresult($result);
-			
+
 			// Sanitize for SQL
 			$server_ip = $this->db->sql_escape($server_ip . ':' . $server_port);
 			$server_name = $this->db->sql_escape($server_name);
@@ -224,9 +224,8 @@ class admin_controller
 	}
 	private function generate_protocol_list()
 	{
-		require_once(__DIR__ . '/../includes/functions_serversboard.php');
 		global $template, $user;
-		$protocols = \token07\serversboard\includes\get_supported_protocols();
+		$protocols = $this->get_supported_protocols();
 		$curProto = '';
 		$baseProtos = array();
 		$sortExceptions = array('bf3', 'quake3', 'samp', 'ase', 'starmade', 'lhmp'); // Servers that are actually games
@@ -297,7 +296,7 @@ class admin_controller
 			throw new Exception("???");
 		}
 		$current_value = (int) $data['server_order'];
-		
+
 		if (!$move_up)
 		{
 			$delta = abs($delta) + 1;
@@ -310,7 +309,7 @@ class admin_controller
 	
 		$sibling_count = 0;
 		$sibling_limit = $delta;
-		
+
 		// Reset the delta, as we recalculate the new real delta
 		$delta = 0;
 		while ($row = $this->db->sql_fetchrow($result))
@@ -325,7 +324,7 @@ class admin_controller
 			}
 		}
 		$this->db->sql_freeresult($result);
-		
+
 		if ($delta)
 		{
 			// First we move all items between our current value and the target value up/down 1,
@@ -348,5 +347,46 @@ class admin_controller
 			//$this->cache->destroy('sql', TEAMPAGE_TABLE);
 			return true;
 		}
+	}
+	private function get_supported_protocols()
+	{
+		// Modified from vendor/austinb/gameq/examples/list.php
+		$protocols = array();
+		$protocols_path = __DIR__ . "/../vendor/austinb/gameq/src/GameQ/Protocols/";
+
+		// Grab the dir with all the classes available
+		$dir = dir($protocols_path);
+
+		$protocols = [];
+
+		// Now lets loop the directories
+		while (false !== ($entry = $dir->read()))
+		{
+			if (!is_file($protocols_path . $entry))
+			{
+				continue;
+			}
+
+			// Lets get some info on the class
+			$reflection = new \ReflectionClass('\\GameQ\\Protocols\\' . pathinfo($entry, PATHINFO_FILENAME));
+
+			// Check to make sure we can actually load the class
+			if (!$reflection->IsInstantiable()) {
+				continue;
+			}
+			$class = $reflection->newInstance();
+			$protocols[ $class->name() ] = [
+				'class' => '\\GameQ\\Protocols\\' . pathinfo($entry, PATHINFO_FILENAME),
+				'name'  => $class->nameLong(),
+				'short'	=> $class->name(), // Sorting causes key name to get lost
+				'parent' => '\\' . get_parent_class($class),
+				'protocol'	=> $class->getProtocol(),
+			];
+			unset($class);
+		}
+		// Sort each server type by the protocol
+		usort($protocols, function($a, $b) { return $a['protocol'] > $b['protocol']; } );
+
+		return $protocols;
 	}
 }
