@@ -21,15 +21,16 @@ class serversboard_module
 		$user = $phpbb_container->get('user');
 		$request = $phpbb_container->get('request');
 		$admin_controller->set_action($this->u_action);
-		
+
 		switch ($mode)
 		{
 			case 'servers':
 				$this->tpl_name = 'serversboard_manage';
 				$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
-				if (isset($_GET['action']))
+				$action = $request->variable('action', '');
+				
+				if (!empty($action))
 				{
-					$action = $request->variable('action', '');
 					$this->tpl_name = 'serversboard_manage';
 					$this->page_title = $user->lang('TOKEN07_SERVERSBOARD_ACP_SERVERSBOARD');
 					switch ($action)
