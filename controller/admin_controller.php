@@ -20,7 +20,7 @@ class admin_controller
 	protected $phpbb_log;
 	protected $serversboard_table;
 	protected $u_action;
-	
+
 	public function __construct(\phpbb\config\config $config, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\db\driver\factory $db, \phpbb\log\log $phpbb_log, $serversboard_table)
 	{
 		$this->config = $config;
@@ -57,7 +57,7 @@ class admin_controller
 			$server_name = $this->request->variable('token07_serversboard_hostname', '');
 			$server_protocol = $this->request->variable('token07_serversboard_servertype', '');
 			$server_queryport = $this->request->variable('token07_serversboard_queryport', '');
-			
+
 			// Validate IP and port
 			if (!filter_var($server_ip, FILTER_VALIDATE_IP))
 			{
@@ -126,11 +126,11 @@ class admin_controller
 	}
 	public function move_server($action)
 	{
-		$this->move($this->request->variable('server_id', 0), $action == 'move_up' ? 1 : -1);
+		$status = $this->move($this->request->variable('server_id', 0), $action == 'move_up' ? 1 : -1);
 		if ($this->request->is_ajax())
 		{
 			$json_response = new \phpbb\json_response;
-			$json_response->send(array('success' => true));
+			$json_response->send(array('success' => $status));
 			return;
 		}
 		$this->generate_server_list();
@@ -224,7 +224,6 @@ class admin_controller
 	}
 	private function generate_protocol_list()
 	{
-		global $template, $user;
 		$protocols = $this->get_supported_protocols();
 		$curProto = '';
 		$baseProtos = array();
@@ -250,12 +249,12 @@ class admin_controller
 				$baseProtos[] = $protocol;
 			}
 		}
-		$template->assign_block_vars('serversboard_base_protocols', array(
+		$this->template->assign_block_vars('serversboard_base_protocols', array(
 			'CATEGORY'	=> $this->user->lang('TOKEN07_SERVERSBOARD_ACP_OTHER'),
 		));
 		foreach ($baseProtos AS $protocol)
 		{
-			$template->assign_block_vars('serversboard_base_protocols.protocols', array(
+			$this->template->assign_block_vars('serversboard_base_protocols.protocols', array(
 					'NAME'		=> $protocol['name'],
 					'VALUE'		=> $protocol['protocol'],
 			));
@@ -293,7 +292,7 @@ class admin_controller
 		$result = $this->db->sql_query($sql);
 		if (!$data = $this->db->sql_fetchrow($result))
 		{
-			throw new Exception("???");
+			return false;
 		}
 		$current_value = (int) $data['server_order'];
 
