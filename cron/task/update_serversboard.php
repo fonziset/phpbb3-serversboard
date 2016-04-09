@@ -10,6 +10,11 @@
 
 namespace token07\serversboard\cron\task;
 
+if (!defined('IN_PHPBB'))
+{
+	exit;
+}
+
 require(dirname(__FILE__) . "/../../vendor/autoload.php");
 
 class update_serversboard extends \phpbb\cron\task\base
@@ -17,10 +22,7 @@ class update_serversboard extends \phpbb\cron\task\base
 	protected $config;
 	protected $db;
 	protected $serversboard_table;
-	
-	/**
-	* Constructor.
-	*/
+
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\factory $db, $serversboard_table)
 	{
 		$this->config = $config;
