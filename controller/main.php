@@ -19,10 +19,11 @@ class main
 	protected $db;
 	protected $serversboard_table;
 	
-	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\user $user, \phpbb\db\driver\factory $db, $serversboard_table)
+	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\db\driver\factory $db, $serversboard_table)
 	{
 		$this->config = $config;
 		$this->helper = $helper;
+		$this->request = $request;
 		$this->template = $template;
 		$this->user = $user;
 		$this->db = $db;
@@ -71,9 +72,11 @@ class main
 	}
 	public function handle()
 	{
-		global $table_prefix;
 		$this->setBreadcrumbs();
-		$result = $this->db->sql_query('SELECT server_id, server_order, server_ip, server_status, server_hostname, server_map, server_players, server_join_link, server_show_time_online, server_show_gametracker FROM ' . $this->serversboard_table . ' ORDER BY server_order');
+		$result = $this->db->sql_query('SELECT 
+				server_id, server_order, server_ip, server_status, server_hostname, server_map, server_players, server_join_link, server_show_gametracker 
+			FROM ' . $this->serversboard_table .
+			' ORDER BY server_order');
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$this->setTemplateVars($row);
@@ -85,12 +88,10 @@ class main
 	
 	public function viewDetails($id)
 	{
-		global $request, $table_prefix;
-		
-		if ($request->is_ajax())
+		$result = $this->db->sql_query('SELECT server_id, server_status, server_hostname, server_ip, server_players, server_map, server_playerlist, server_lastupdate, server_join_link, server_show_gametracker, server_show_time_online FROM ' . $this->serversboard_table .' WHERE server_id = ' . (int) $id);
+		if ($this->request->is_ajax())
 		{
 			$json_response = new \phpbb\json_response;
-			$result = $this->db->sql_query("SELECT server_hostname, server_playerlist FROM {$table_prefix}serversboard WHERE server_id = $id");
 			if ($row = $this->db->sql_fetchrow($result))
 			{
 				$playerList = $row['server_playerlist'];
@@ -106,12 +107,11 @@ class main
 		}
 		$this->setBreadcrumbs();
 		$this->template->assign_var('TOKEN07_SERVERSBOARD_ENABLE', true);
-		$result = $this->db->sql_query("SELECT * FROM {$table_prefix}serversboard WHERE server_id = $id");
 		if ($row = $this->db->sql_fetchrow($result))
 		{
 			$playerList = $row['server_playerlist'];
 			unset($row['server_playerlist']);
-			$this->setTemplateVars(array_map('htmlentities',$row));
+			$this->setTemplateVars($row);
 			$this->template->assign_var('SERVER_EMPTY', $playerList == "[]");
 			$this->template->assign_var('SHOW_TIMES', $row['server_show_time_online']);
 			foreach (json_decode($playerList) AS $player)
