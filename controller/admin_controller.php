@@ -235,11 +235,11 @@ class admin_controller
 				if ($protocol['protocol'] != $curProto)
 				{
 					$curProto = $protocol['protocol'];
-					$template->assign_block_vars('serversboard_base_protocols', array(
+					$this->template->assign_block_vars('serversboard_base_protocols', array(
 						'CATEGORY'	=> $protocol['protocol'],
 					));
 				}
-				$template->assign_block_vars('serversboard_base_protocols.protocols', array(
+				$this->template->assign_block_vars('serversboard_base_protocols.protocols', array(
 					'NAME'		=> $protocol['name'],
 					'VALUE'		=> $protocol['short'],
 				));
