@@ -147,7 +147,7 @@ class admin_controller
 			$port = $this->request->variable('token07_serversboard_port', 0);
 			$hostname = $this->request->variable('token07_serversboard_hostname', '', true);
 			$protocol = $this->request->variable('token07_serversboard_servertype', '');
-			$query_port = $this->request->variable('server_query_port', 0);
+			$query_port = $this->request->variable('token07_serversboard_queryport', 0);
 			$server_ip = $ip . ":" . $port;
 			$server_id = $this->request->variable('server_id', -1);
 			$server_show_gt = (bool) $this->request->variable('token07_serversboard_gametracker', '');
