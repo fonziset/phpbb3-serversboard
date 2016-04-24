@@ -118,6 +118,10 @@ class admin_controller
 			}
 			trigger_error($this->user->lang('TOKEN07_SERVERSBOARD_ACP_NO_SERVER') . adm_back_link($this->u_action), E_USER_WARNING);
 		}
+		elseif (isset($_POST['cancel']))
+		{
+			redirect($this->u_action);
+		}
 		$fields = build_hidden_fields(array(
 			'action' => 'delete',
 			'server_id'	=> $this->request->variable('server_id', 0),
