@@ -23,18 +23,20 @@ class main_listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.user_setup'	=> 'load_language_on_setup',
+			'core.user_setup'				=> 'load_language_on_setup',
+			'core.user_setup_after'			=> 'player_count_setup',
 			'core.index_modify_page_title'	=> 'load_serversboard',
-			'core.permissions'		=> 'add_permission',
+			'core.permissions'				=> 'add_permission',
 		);
 	}
 
-	public function __construct(\phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\config\config $config, \phpbb\db\driver\factory $db, $serversboard_table)
+	public function __construct(\phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\config\config $config, \phpbb\db\driver\factory $db, \phpbb\user $user, $serversboard_table)
 	{
 		$this->helper = $helper;
 		$this->template = $template;
 		$this->config = $config;
 		$this->db = $db;
+		$this->user = $user;
 		$this->serversboard_table = $serversboard_table;
 	}
 
@@ -49,7 +51,10 @@ class main_listener implements EventSubscriberInterface
 		$this->template->assign_var('TOKEN07_SERVERSBOARD_NAVBAR_LINK_ENABLE', $this->config['serversboard_navbar_link_enable']);
 		$this->template->assign_var('TOKEN07_SERVERSBOARD_URL', $this->helper->route("token07_serversboard_controller"));
 	}
-	
+	public function player_count_setup()
+	{
+		$this->template->assign_var('TOKEN07_SERVERSBOARD_NAVBAR_TEXT', $this->user->lang('TOKEN07_SERVERSBOARD_PLAYER_COUNT', (int) $this->config['serversboard_player_count']));
+	}
 	public function load_serversboard($page_title)
 	{
 		if ($this->config['serversboard_enable'])

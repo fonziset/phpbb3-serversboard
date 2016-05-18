@@ -39,6 +39,7 @@ class update_serversboard extends \phpbb\cron\task\base
 	{
 		$GameQ = new \GameQ\GameQ();
 		$servers = array();
+		$playerCount = 0;
 		$result = $this->db->sql_query('SELECT server_type, server_ip, server_id, server_query_port FROM ' . $this->serversboard_table);
 		
 		while ($row = $this->db->sql_fetchrow($result))
@@ -106,7 +107,9 @@ class update_serversboard extends \phpbb\cron\task\base
 			$sql = 'UPDATE ' . $this->serversboard_table . ' SET ' . $this->db->sql_build_array('UPDATE', $newDetails) . '
 				WHERE server_id = ' . (int) $server;
 			$this->db->sql_query($sql);
+			$playerCount += $result['gq_numplayers'];
 		}
 		$this->config->set('serversboard_update_last_run', time());
+		$this->config->set('serversboard_player_count', $playerCount);
 	}
 }

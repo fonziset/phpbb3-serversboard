@@ -16,6 +16,7 @@ services:
             - '@template'
             - '@config'
             - '@dbal.conn'
+            - '@user'
             - '%token07.serversboard.tables.serversboard%'
         tags:
             - { name: event.listener }
