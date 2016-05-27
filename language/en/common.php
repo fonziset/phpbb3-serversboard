@@ -33,7 +33,8 @@ $lang = array_merge($lang, array(
 	'TOKEN07_SERVERSBOARD_CONNECT'		=> 'Connect',
 	'TOKEN07_SERVERSBOARD_INVALID'		=> 'The server you selected does not exist.',
 	'TOKEN07_SERVERSBOARD_PLAYER_COUNT'	=> array(
-		1 => '%d player online!',
-		2 => '%d players online!',
+		1 => 'Player online [%d]',
+		2 => 'Players online [%d]',
+		3 => 'No players online',
 	),
 ));
